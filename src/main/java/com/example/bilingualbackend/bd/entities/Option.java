@@ -10,6 +10,7 @@ import static jakarta.persistence.CascadeType.*;
 @Getter
 @Setter
 @Entity
+@Table(name = "options")
 @NoArgsConstructor
 public class Option {
     @Id

@@ -13,6 +13,7 @@ import static jakarta.persistence.CascadeType.*;
 @Getter
 @Setter
 @Entity
+@Table(name = "results")
 @NoArgsConstructor
 public class Result {
     @Id

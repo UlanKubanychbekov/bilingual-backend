@@ -14,6 +14,7 @@ import static jakarta.persistence.CascadeType.*;
 @Entity
 @Getter
 @Setter
+@Table(name = "questions")
 @NoArgsConstructor
 public class Question {
     @Id
