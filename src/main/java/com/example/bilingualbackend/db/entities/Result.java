@@ -1,4 +1,4 @@
-package com.example.bilingualbackend.bd.entities;
+package com.example.bilingualbackend.db.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;

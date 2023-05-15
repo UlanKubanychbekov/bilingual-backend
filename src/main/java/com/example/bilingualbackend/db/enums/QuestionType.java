@@ -1,4 +1,4 @@
-package com.example.bilingualbackend.bd.enums;
+package com.example.bilingualbackend.db.enums;
 
 public enum QuestionType {
     SELECT_ENGLISH_WORD,

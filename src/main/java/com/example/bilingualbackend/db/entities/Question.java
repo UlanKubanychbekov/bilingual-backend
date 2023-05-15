@@ -1,6 +1,6 @@
-package com.example.bilingualbackend.bd.entities;
+package com.example.bilingualbackend.db.entities;
 
-import com.example.bilingualbackend.bd.enums.QuestionType;
+import com.example.bilingualbackend.db.enums.QuestionType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
