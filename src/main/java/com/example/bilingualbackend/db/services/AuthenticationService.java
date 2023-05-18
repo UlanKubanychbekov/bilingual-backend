@@ -6,6 +6,8 @@ import com.example.bilingualbackend.dto.requests.auth.AuthenticationRequest;
 import com.example.bilingualbackend.dto.requests.auth.SignUpRequest;
 import com.example.bilingualbackend.dto.responses.auth.AuthenticationResponse;
 import com.example.bilingualbackend.exceptions.AlreadyExistException;
+import com.example.bilingualbackend.exceptions.BadCredentialException;
+import com.example.bilingualbackend.exceptions.BadRequestException;
 import com.example.bilingualbackend.exceptions.NotFoundException;
 import com.example.bilingualbackend.db.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -48,52 +50,25 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse signIn(AuthenticationRequest authenticationRequest) {
-        var user = userRepository.findByEmail(authenticationRequest.getEmail())
-                .orElseThrow(() -> new NotFoundException("User was not found."));
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        authenticationRequest.getEmail(),
-                        authenticationRequest.getPassword()
-                )
+        var user = userRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow(
+                () -> new NotFoundException("User with this email: " + authenticationRequest.getEmail() + " not found!")
         );
 
-        var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse
-                .builder()
-                .token(jwtToken)
-                .email(user.getUsername())
-                .role(user.getRole())
-                .build();
-    }
-
-    public AuthResponse login(SignInRequest signInRequest) {
-
-        User user = repository.findUserByEmail(signInRequest.getEmail()).orElseThrow(
-                () -> {
-                    log.error("User with this email: {} not found!", signInRequest.getEmail());
-                    throw new NotFoundException("User with this email: " + signInRequest.getEmail() + " not found!");
-                }
-        );
-
-        if (signInRequest.getPassword().isBlank()) {
-            log.error("Password can not be empty!");
+        if (authenticationRequest.getPassword().isBlank()) {
             throw new BadRequestException("password can not be empty!");
         }
 
-        if (!passwordEncoder.matches(signInRequest.getPassword(), user.getPassword())) {
-            log.error("incorrect password!");
+        if (!passwordEncoder.matches(authenticationRequest.getPassword(), user.getPassword())) {
             throw new BadCredentialException("incorrect password!");
         }
 
-        String jwt = jwtUtil.generateToken(user.getEmail());
-        return new AuthResponse(
-                user.getId(),
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                user.getRole(),
-                jwt
-        );
+        var jwt = jwtService.generateToken(user);
+        return AuthenticationResponse
+                .builder()
+                .token(jwt)
+                .email(user.getUsername())
+                .role(user.getRole())
+                .build();
     }
 }
