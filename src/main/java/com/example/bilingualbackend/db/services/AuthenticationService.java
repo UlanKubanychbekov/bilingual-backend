@@ -66,4 +66,34 @@ public class AuthenticationService {
                 .role(user.getRole())
                 .build();
     }
+
+    public AuthResponse login(SignInRequest signInRequest) {
+
+        User user = repository.findUserByEmail(signInRequest.getEmail()).orElseThrow(
+                () -> {
+                    log.error("User with this email: {} not found!", signInRequest.getEmail());
+                    throw new NotFoundException("User with this email: " + signInRequest.getEmail() + " not found!");
+                }
+        );
+
+        if (signInRequest.getPassword().isBlank()) {
+            log.error("Password can not be empty!");
+            throw new BadRequestException("password can not be empty!");
+        }
+
+        if (!passwordEncoder.matches(signInRequest.getPassword(), user.getPassword())) {
+            log.error("incorrect password!");
+            throw new BadCredentialException("incorrect password!");
+        }
+
+        String jwt = jwtUtil.generateToken(user.getEmail());
+        return new AuthResponse(
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getRole(),
+                jwt
+        );
+    }
 }
