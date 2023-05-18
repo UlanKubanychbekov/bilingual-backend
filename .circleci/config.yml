@@ -87,18 +87,18 @@ workflows:
           filters:
             branches:
               only:
-                - main
+                - master
       - build-image:
           requires:
             - install-docker-if-not-exists
           filters:
             branches:
               only:
-                - main
+                - master
       - transfer-and-run:
           requires:
             - build-image
           filters:
             branches:
               only:
-                - main
+                - master
