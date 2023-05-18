@@ -3,7 +3,7 @@ version: 2.1
 parameters:
   docker-container:
     type: string
-    default: "bilingual=backend"
+    default: "bilingual-backend"
 
 jobs:
   install-docker-if-not-exists:
