@@ -1,0 +1,22 @@
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  # Дополнительные поля пользователя
+}
+
+type AuthPayload {
+  user: User
+  token: String
+}
+
+type Mutation {
+  signInWithGoogle(idToken: String!): AuthPayload
+  # Другие методы аутентификации, например, signInWithEmailAndPassword, signUpWithEmailAndPassword и т. д.
+}
+
+type Query {
+  # Методы для получения информации о текущем пользователе и проверки аутентификации
+  currentUser: User
+  isAuthenticated: Boolean
+}
