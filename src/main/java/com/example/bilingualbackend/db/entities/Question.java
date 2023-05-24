@@ -1,5 +1,6 @@
 package com.example.bilingualbackend.db.entities;
 
+import com.example.bilingualbackend.db.enums.ContentType;
 import com.example.bilingualbackend.db.enums.QuestionType;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -22,15 +23,18 @@ public class Question {
     @SequenceGenerator(name = "question_seq", sequenceName = "question_seq",allocationSize = 1)
     private Long id;
     private String title;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private QuestionType questionType;
     private int duration;
     private boolean enable;
-    @ElementCollection
-    private Map<String, String> content;
-    private int numberOfReplays;
-    private String statement;
+    @ElementCollection()
+    @MapKeyEnumerated(EnumType.STRING)
+    private Map< ContentType , String> value;
+    private Integer count;
+    @Column(length = 10000)
     private String passage;
+    @Column(length = 10000)
+    private String correctAnswer;
     @OneToMany(mappedBy = "question" ,cascade = ALL)
     private List<Option> options;
     @ManyToOne(cascade = {MERGE, DETACH})

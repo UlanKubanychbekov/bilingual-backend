@@ -23,6 +23,8 @@ public class QuestionAnswer {
     private double score;
     private LocalTime fixedTime;
     private int duration;
+    private boolean isEvaluated;
+    private boolean isSeen;
     @ManyToOne(cascade = {DETACH, MERGE, REFRESH})
     private Question question;
     @ManyToMany(cascade = {DETACH, REFRESH, MERGE})
