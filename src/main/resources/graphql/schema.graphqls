@@ -1,0 +1,19 @@
+type Query {
+    users: String
+}
+
+type Mutation{
+    signUp(email: String!, firstName: String!, lastName: String!, password: String!): AuthenticationResponse
+    signIn(email: String!, password: String!): AuthenticationResponse
+}
+
+type AuthenticationResponse {
+    email: String
+    token: String
+    role: Role
+}
+
+enum Role {
+    ADMIN,
+    USER
+}
