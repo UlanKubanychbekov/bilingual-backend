@@ -23,4 +23,8 @@ public class SecurityController {
     AuthenticationResponse signIn(@Argument String email, @Argument String password) {
         return authenticationService.signIn(new AuthenticationRequest(email, password));
     }
+    @MutationMapping("authenticateWithGoogle")
+     AuthenticationResponse authenticateWithGoogle(@Argument String tokenId) {
+        return authenticationService.authWithGoogle(tokenId);
+    }
 }

@@ -26,4 +26,8 @@ public class AuthController {
     public AuthenticationResponse signIn(@RequestBody AuthenticationRequest authenticationRequest) {
         return authenticationService.signIn(authenticationRequest);
     }
+    @PostMapping("/google")
+    public AuthenticationResponse authenticateWithGoogle(@RequestBody String tokenId) {
+        return authenticationService.authWithGoogle(tokenId);
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.bilingualbackend.db.services;
 
+import com.example.bilingualbackend.config.FirebaseAuthentication;
 import com.example.bilingualbackend.config.jwt.JwtService;
 import com.example.bilingualbackend.db.entities.User;
 import com.example.bilingualbackend.db.enums.Role;
@@ -11,7 +12,10 @@ import com.example.bilingualbackend.exceptions.AlreadyExistException;
 import com.example.bilingualbackend.exceptions.BadCredentialException;
 import com.example.bilingualbackend.exceptions.BadRequestException;
 import com.example.bilingualbackend.exceptions.NotFoundException;
+import com.google.firebase.auth.FirebaseAuthException;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +25,8 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private static final Logger log = LoggerFactory.getLogger(AuthenticationService.class);
+    private final FirebaseAuthentication firebaseAuthentication;
 
     public AuthenticationResponse signUp(SignUpRequest signUpRequest) {
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
@@ -67,5 +73,14 @@ public class AuthenticationService {
                 .email(user.getUsername())
                 .role(user.getRole())
                 .build();
+    }
+
+    public AuthenticationResponse authWithGoogle(String tokenId) {
+        try {
+            return firebaseAuthentication.authWithGoogle(tokenId);
+        } catch (FirebaseAuthException e) {
+            log.error("Firebase authentication error: {}", e.getMessage());
+            throw new NotFoundException("Firebase authentication error");
+        }
     }
 }
