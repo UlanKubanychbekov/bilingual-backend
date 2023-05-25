@@ -13,9 +13,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -24,19 +23,17 @@ import java.io.IOException;
 import javax.annotation.PostConstruct;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class FirebaseAuthentication {
 
-    private static final Logger log = LoggerFactory.getLogger(FirebaseAuthentication.class);
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private JwtService jwtService;
+    private final JwtService jwtService;
 
     @PostConstruct
     void init() {
         try {
-
             GoogleCredentials googleCredentials = GoogleCredentials.fromStream(new ClassPathResource("bilingual-backend.json").getInputStream());
             FirebaseOptions firebaseOptions = FirebaseOptions.builder()
                     .setCredentials(googleCredentials)
@@ -47,7 +44,6 @@ public class FirebaseAuthentication {
             log.error("IOException occurred while initializing Firebase");
         }
     }
-
 
     public AuthenticationResponse authWithGoogle(String tokenId) throws FirebaseAuthException {
         FirebaseToken firebaseToken = FirebaseAuth.getInstance().verifyIdToken(tokenId);
@@ -63,7 +59,7 @@ public class FirebaseAuthentication {
         }
         User user = userRepository.findByEmail(firebaseToken.getEmail()).orElseThrow(() -> {
             log.error("User not found for email {}", firebaseToken.getEmail());
-            throw new NotFoundException(String.format("User with this %s email not found !!", firebaseToken.getEmail()));
+            return new NotFoundException(String.format("User with this %s email not found !!", firebaseToken.getEmail()));
         });
         log.info("User authenticated successfully with Google for email {}", firebaseToken.getEmail());
         String token = jwtService.generateToken(user);
