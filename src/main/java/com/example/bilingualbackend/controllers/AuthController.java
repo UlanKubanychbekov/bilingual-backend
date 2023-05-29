@@ -30,4 +30,5 @@ public class AuthController {
     public AuthenticationResponse authenticateWithGoogle(@RequestBody String tokenId) {
         return authenticationService.authWithGoogle(tokenId);
     }
+
 }
