@@ -1,11 +1,5 @@
-type Query {
-    users: String
-}
 
-type Mutation{
-    signUp(email: String!, firstName: String!, lastName: String!, password: String!): AuthenticationResponse
-    signIn(email: String!, password: String!): AuthenticationResponse
-}
+
 
 type AuthenticationResponse {
     email: String
@@ -17,3 +11,20 @@ enum Role {
     ADMIN,
     USER
 }
+type Test {
+    id: ID!
+    title: String!
+    description: String!
+    enable: Boolean!
+    duration: Int!
+
+}
+
+input TestDto {
+    id: ID
+    title: String
+    description: String
+    enable: Boolean
+    duration: Int
+}
+

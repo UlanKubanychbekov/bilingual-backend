@@ -1,0 +1,5 @@
+type Query {
+    users: String
+    findAll: [Test!]!
+    findById(id: ID!) : Test
+}
