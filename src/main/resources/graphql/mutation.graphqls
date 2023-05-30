@@ -1,7 +1,0 @@
-type Mutation{
-    signUp(email: String!, firstName: String!, lastName: String!, password: String!): AuthenticationResponse
-    signIn(email: String!, password: String!): AuthenticationResponse
-    create(testDto: TestDto!): Test!
-    update(id: ID!, testDto: TestDto!): Test!
-    delete(id: ID!) : ID
-}

@@ -1,11 +1,11 @@
-package com.example.bilingualbackend.db.repositories;
+package com.example.bilingualbackend.db.services.repositories;
 
 import com.example.bilingualbackend.db.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
     boolean existsByEmail(String email);

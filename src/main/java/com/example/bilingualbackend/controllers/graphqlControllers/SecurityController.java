@@ -1,4 +1,4 @@
-package com.example.bilingualbackend.controllers;
+package com.example.bilingualbackend.controllers.graphqlControllers;
 
 import com.example.bilingualbackend.db.services.AuthenticationService;
 import com.example.bilingualbackend.dto.requests.auth.AuthenticationRequest;
