@@ -1,6 +1,6 @@
 package com.example.bilingualbackend.config.security;
 
-import com.example.bilingualbackend.db.repositories.UserRepository;
+import com.example.bilingualbackend.db.services.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -41,4 +41,6 @@ public class ApplicationConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
+
 }
