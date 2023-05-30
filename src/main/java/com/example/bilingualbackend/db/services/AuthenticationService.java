@@ -82,11 +82,10 @@ public class AuthenticationService {
                 User user = userRepository.findByEmail(username).orElseThrow(() -> new NotFoundException(String.format("User with email %s not found!", username)));
 
                 String jwtToken = jwtService.generateToken(user);
-                String newRefreshToken = jwtService.generateRefreshToken(user);
 
                 return AuthenticationResponse.builder()
                         .token(jwtToken)
-                        .refreshToken(newRefreshToken)
+                        .refreshToken(token)
                         .email(user.getEmail())
                         .role(user.getRole())
                         .build();
