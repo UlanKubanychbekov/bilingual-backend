@@ -1,13 +1,13 @@
 type Query {
     users: String
-    findAll: [Test!]!
-    findById(id: ID!) : Test
+    findAll: [TestResponse!]!
+    findById(id: ID!) : TestResponse
 }
 type Mutation{
     signUp(email: String!, firstName: String!, lastName: String!, password: String!): AuthenticationResponse
     signIn(email: String!, password: String!): AuthenticationResponse
-    create(testDto: TestDto!): Test!
-    update(id: ID!, testDto: TestDto!): Test!
+    create(testRequest: TestRequest!): SimpleResponse!
+    update(id: ID!, testRequest: TestRequest!): SimpleResponse!
     delete(id: ID!) : ID
 }
 
@@ -21,7 +21,10 @@ enum Role {
     ADMIN,
     USER
 }
-type Test {
+type SimpleResponse{
+    message : String!
+}
+type TestResponse {
     id: ID!
     title: String!
     description: String!
@@ -30,8 +33,7 @@ type Test {
 
 }
 
-input TestDto {
-    id: ID
+input TestRequest {
     title: String
     description: String
     enable: Boolean

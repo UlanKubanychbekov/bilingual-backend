@@ -1,73 +1,67 @@
 package com.example.bilingualbackend.db.services;
 
-import com.example.bilingualbackend.db.entities.Question;
 import com.example.bilingualbackend.db.entities.Test;
 import com.example.bilingualbackend.db.services.repositories.TestRepository;
-import com.example.bilingualbackend.dto.TestDto;
-import com.example.bilingualbackend.exceptions.BadRequestException;
+import com.example.bilingualbackend.dto.requests.auth.TestRequest;
+import com.example.bilingualbackend.dto.responses.auth.SimpleResponse;
+import com.example.bilingualbackend.dto.responses.auth.TestResponse;
 import com.example.bilingualbackend.exceptions.NotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 
-
-@Component
+@Transactional
+@RequiredArgsConstructor
+@Service
 public class TestService {
-    @Autowired
-    private TestRepository testRepository;
 
-    public List<Test> getAllTests(){
-    return testRepository.findAll().stream().toList();
+    private final TestRepository testRepository;
+
+    public List<TestResponse> getAllTests() {
+        return testRepository.findAllTests();
+
     }
 
-    public Test createNewTest(TestDto testDto) {
+    public SimpleResponse createNewTest(TestRequest testRequest) {
+
         Test test = new Test();
-        boolean exists = testRepository.findAll()
-                        .stream().anyMatch(test1 -> Objects.equals(test1.getId(), testDto.getId()));
-        if(!exists) {
-            test.setId(testDto.getId());
-            test.setTitle(testDto.getTitle());
-            test.setDescription(testDto.getDescription());
-            test.setDuration(testDto.getDuration());
-            test.setEnable(testDto.isEnable());
-            return testRepository.save(test);
-        }else {
-            throw new NullPointerException("testDto is null");
+
+        test.setTitle(testRequest.getTitle());
+        test.setDescription(testRequest.getDescription());
+        test.setDuration(testRequest.getDuration());
+        test.setEnable(testRequest.isEnable());
+        testRepository.save(test);
+        return new SimpleResponse(String.format("Successfully created a new test with %s", test.getId()));
+    }
+
+    @Transactional
+    public SimpleResponse updateTest(Long id, TestRequest testRequest) {
+        Test test = testRepository.findById(id)
+                .orElseThrow(() ->
+                        new NotFoundException("no test with such an id:"));
+        if (testRequest.getTitle() != null && !testRequest.getTitle().isBlank()) {
+            test.setTitle(testRequest.getTitle());
         }
-
-    }
-
-    public Test updateTest(Long id, TestDto dto) {
-        Test test = findById(id);
-                if(dto.getTitle() != null && !dto.getTitle().isBlank()) {
-                    test.setTitle(dto.getTitle());
-                }
-                if(dto.getDescription()!=null && !dto.getDescription().isBlank()) {
-                    test.setDescription(dto.getDescription());
-                }
-                if(!dto.isEnable()) {
-                    test.setEnable(dto.isEnable());
-                }
-                if(dto.getDuration()!=0) {
-                    test.setDuration(dto.getDuration());
-                }
-        return testRepository.save(test);
-    }
-
-    public Test findById(Long id) {
-        return testRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(
-                        String.format("test with id = %s does not exists", id)
-                ));
-    }
-
-    public void delete(Long id){
-        boolean exists = testRepository.existsById(id);
-        if(!exists){
-            throw new BadRequestException(String.format("test with id = %s does not exists", id));
+        if (testRequest.getDescription() != null && !testRequest.getDescription().isBlank()) {
+            test.setDescription(testRequest.getDescription());
         }
-      testRepository.deleteById(id);
+        if (!testRequest.isEnable()) {
+            test.setEnable(testRequest.isEnable());
+        }
+        if (testRequest.getDuration() != 0) {
+            test.setDuration(testRequest.getDuration());
+        }
+        return new SimpleResponse(String.format("Updated test with id: %s", id));
+    }
+
+    public TestResponse findById(Long id) {
+        return testRepository.findTestById(id);
+    }
+
+    public SimpleResponse delete(Long id) {
+        testRepository.deleteById(id);
+        return new SimpleResponse(String.format("Successfully deleted a test with id: %s", id));
     }
 }

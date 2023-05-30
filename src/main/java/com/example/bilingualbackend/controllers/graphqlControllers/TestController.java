@@ -1,15 +1,14 @@
 package com.example.bilingualbackend.controllers.graphqlControllers;
 
-import com.example.bilingualbackend.db.entities.Test;
 import com.example.bilingualbackend.db.services.TestService;
-import com.example.bilingualbackend.dto.TestDto;
-import jakarta.validation.Valid;
+import com.example.bilingualbackend.dto.requests.auth.TestRequest;
+import com.example.bilingualbackend.dto.responses.auth.SimpleResponse;
+import com.example.bilingualbackend.dto.responses.auth.TestResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -18,31 +17,32 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/tests")
 public class TestController {
-  private final TestService testService;
+    private final TestService testService;
 
-  @MutationMapping(name = "create")
-    public Test create(@Argument TestDto testDto){
-    return testService.createNewTest(testDto);
-  }
+    @MutationMapping(name = "create")
+    public SimpleResponse create(@Argument TestRequest testRequest) {
 
-  @QueryMapping()
-  public List<Test> findAll(){
-    return testService.getAllTests();
-  }
+        return testService.createNewTest(testRequest);
+    }
 
-  @QueryMapping(name = "findById")
-  public Test findById(@Argument Long id){
-    return testService.findById(id);
-  }
+    @QueryMapping()
+    public List<TestResponse> findAll() {
+        return testService.getAllTests();
+    }
 
-  @MutationMapping(name = "update")
-  public Test update(@Argument Long id,@Argument TestDto testDto){
-    return testService.updateTest(id,testDto);
-  }
+    @QueryMapping(name = "findById")
+    public TestResponse findById(@Argument Long id) {
+        return testService.findById(id);
+    }
 
-  @MutationMapping(name = "delete")
-  public void delete(@Argument Long id){
-    testService.delete(id);
-  }
+    @MutationMapping(name = "update")
+    public SimpleResponse update(@Argument Long id, @Argument TestRequest testRequest) {
+        return testService.updateTest(id, testRequest);
+    }
+
+    @MutationMapping(name = "delete")
+    public SimpleResponse delete(@Argument Long id) {
+        return testService.delete(id);
+    }
 
 }
