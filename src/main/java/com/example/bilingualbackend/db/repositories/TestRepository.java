@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface TestRepository extends JpaRepository<Test, Long> {
-    @Query("select new com.example.bilingualbackend.dto.responses.auth.TestResponse(" +
+    @Query("select new com.example.bilingualbackend.dto.responses.TestResponse(" +
             "t.id," +
             "t.title, " +
             "t.description," +
@@ -19,7 +19,7 @@ public interface TestRepository extends JpaRepository<Test, Long> {
     List<TestResponse> findAllTests();
 
 
-    @Query("select new com.example.bilingualbackend.dto.responses.auth.TestResponse(" +
+    @Query("select new com.example.bilingualbackend.dto.responses.TestResponse(" +
             "t.id, t.title, t.description, t.enable, t.duration) " +
             "from Test t where t.id = :id")
     TestResponse findTestById(Long id);
