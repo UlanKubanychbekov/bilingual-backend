@@ -1,9 +1,9 @@
 package com.example.bilingualbackend.controllers.rest;
 
 import com.example.bilingualbackend.db.services.TestService;
-import com.example.bilingualbackend.dto.requests.auth.TestRequest;
-import com.example.bilingualbackend.dto.responses.auth.SimpleResponse;
-import com.example.bilingualbackend.dto.responses.auth.TestResponse;
+import com.example.bilingualbackend.dto.requests.TestRequest;
+import com.example.bilingualbackend.dto.responses.SimpleResponse;
+import com.example.bilingualbackend.dto.responses.TestResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

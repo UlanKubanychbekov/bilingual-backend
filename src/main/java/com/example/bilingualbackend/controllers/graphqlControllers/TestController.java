@@ -1,9 +1,9 @@
 package com.example.bilingualbackend.controllers.graphqlControllers;
 
 import com.example.bilingualbackend.db.services.TestService;
-import com.example.bilingualbackend.dto.requests.auth.TestRequest;
-import com.example.bilingualbackend.dto.responses.auth.SimpleResponse;
-import com.example.bilingualbackend.dto.responses.auth.TestResponse;
+import com.example.bilingualbackend.dto.requests.TestRequest;
+import com.example.bilingualbackend.dto.responses.SimpleResponse;
+import com.example.bilingualbackend.dto.responses.TestResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;

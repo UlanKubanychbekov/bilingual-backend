@@ -2,9 +2,9 @@ package com.example.bilingualbackend.db.services;
 
 import com.example.bilingualbackend.db.entities.Test;
 import com.example.bilingualbackend.db.services.repositories.TestRepository;
-import com.example.bilingualbackend.dto.requests.auth.TestRequest;
-import com.example.bilingualbackend.dto.responses.auth.SimpleResponse;
-import com.example.bilingualbackend.dto.responses.auth.TestResponse;
+import com.example.bilingualbackend.dto.requests.TestRequest;
+import com.example.bilingualbackend.dto.responses.SimpleResponse;
+import com.example.bilingualbackend.dto.responses.TestResponse;
 import com.example.bilingualbackend.exceptions.NotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -40,19 +40,11 @@ public class TestService {
     public SimpleResponse updateTest(Long id, TestRequest testRequest) {
         Test test = testRepository.findById(id)
                 .orElseThrow(() ->
-                        new NotFoundException("no test with such an id:"));
-        if (testRequest.getTitle() != null && !testRequest.getTitle().isBlank()) {
-            test.setTitle(testRequest.getTitle());
-        }
-        if (testRequest.getDescription() != null && !testRequest.getDescription().isBlank()) {
-            test.setDescription(testRequest.getDescription());
-        }
-        if (!testRequest.isEnable()) {
-            test.setEnable(testRequest.isEnable());
-        }
-        if (testRequest.getDuration() != 0) {
-            test.setDuration(testRequest.getDuration());
-        }
+                        new NotFoundException(String.format("No test with such an id: %s", id)));
+        test.setTitle(testRequest.getTitle());
+        test.setDescription(testRequest.getDescription());
+        test.setEnable(testRequest.isEnable());
+        test.setDuration(testRequest.getDuration());
         return new SimpleResponse(String.format("Updated test with id: %s", id));
     }
 

@@ -1,4 +1,4 @@
-package com.example.bilingualbackend.dto.requests.auth;
+package com.example.bilingualbackend.dto.requests;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package com.example.bilingualbackend.dto.responses.auth;
+package com.example.bilingualbackend.dto.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

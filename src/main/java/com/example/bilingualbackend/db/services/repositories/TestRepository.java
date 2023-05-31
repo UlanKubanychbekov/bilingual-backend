@@ -1,7 +1,7 @@
 package com.example.bilingualbackend.db.services.repositories;
 
 import com.example.bilingualbackend.db.entities.Test;
-import com.example.bilingualbackend.dto.responses.auth.TestResponse;
+import com.example.bilingualbackend.dto.responses.TestResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
