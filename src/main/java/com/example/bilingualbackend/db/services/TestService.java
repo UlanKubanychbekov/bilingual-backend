@@ -1,7 +1,7 @@
 package com.example.bilingualbackend.db.services;
 
 import com.example.bilingualbackend.db.entities.Test;
-import com.example.bilingualbackend.db.services.repositories.TestRepository;
+import com.example.bilingualbackend.db.repositories.TestRepository;
 import com.example.bilingualbackend.dto.requests.TestRequest;
 import com.example.bilingualbackend.dto.responses.SimpleResponse;
 import com.example.bilingualbackend.dto.responses.TestResponse;

@@ -3,7 +3,7 @@ package com.example.bilingualbackend.config;
 import com.example.bilingualbackend.config.jwt.JwtService;
 import com.example.bilingualbackend.db.entities.User;
 import com.example.bilingualbackend.db.enums.Role;
-import com.example.bilingualbackend.db.services.repositories.UserRepository;
+import com.example.bilingualbackend.db.repositories.UserRepository;
 import com.example.bilingualbackend.dto.responses.AuthenticationResponse;
 import com.example.bilingualbackend.exceptions.NotFoundException;
 import com.google.auth.oauth2.GoogleCredentials;

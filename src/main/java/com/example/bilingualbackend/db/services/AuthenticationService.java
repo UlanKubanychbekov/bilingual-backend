@@ -4,7 +4,7 @@ import com.example.bilingualbackend.config.FirebaseAuthentication;
 import com.example.bilingualbackend.config.jwt.JwtService;
 import com.example.bilingualbackend.db.entities.User;
 import com.example.bilingualbackend.db.enums.Role;
-import com.example.bilingualbackend.db.services.repositories.UserRepository;
+import com.example.bilingualbackend.db.repositories.UserRepository;
 import com.example.bilingualbackend.dto.requests.AuthenticationRequest;
 import com.example.bilingualbackend.dto.requests.SignUpRequest;
 import com.example.bilingualbackend.dto.responses.AuthenticationResponse;

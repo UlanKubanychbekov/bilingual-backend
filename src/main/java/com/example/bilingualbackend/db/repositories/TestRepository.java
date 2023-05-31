@@ -1,4 +1,4 @@
-package com.example.bilingualbackend.db.services.repositories;
+package com.example.bilingualbackend.db.repositories;
 
 import com.example.bilingualbackend.db.entities.Test;
 import com.example.bilingualbackend.dto.responses.TestResponse;
