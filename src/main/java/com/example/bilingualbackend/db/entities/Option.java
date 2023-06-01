@@ -1,6 +1,7 @@
 package com.example.bilingualbackend.db.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,4 +23,9 @@ public class Option {
     private boolean isTrue;
     @ManyToOne(cascade = {MERGE, REFRESH, DETACH})
     private Question question;
+
+    public Option(String value, boolean isTrue) {
+        this.value = value;
+        this.isTrue = isTrue;
+    }
 }

@@ -3,9 +3,7 @@ package com.example.bilingualbackend.db.entities;
 import com.example.bilingualbackend.db.enums.ContentType;
 import com.example.bilingualbackend.db.enums.QuestionType;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 import java.util.Map;
@@ -17,6 +15,8 @@ import static jakarta.persistence.CascadeType.*;
 @Setter
 @Table(name = "questions")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "question_seq")
@@ -41,4 +41,6 @@ public class Question {
     private Test test;
     @OneToMany(cascade = ALL, mappedBy = "question")
     private List<QuestionAnswer> questionAnswers;
+
+
 }

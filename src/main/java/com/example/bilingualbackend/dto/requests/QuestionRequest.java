@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class QuestionRequest {
 
+    private Long testId;
     private String title;
     private QuestionType questionType;
     private int duration;
