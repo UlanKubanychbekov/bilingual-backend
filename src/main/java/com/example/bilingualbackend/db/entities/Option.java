@@ -1,5 +1,6 @@
 package com.example.bilingualbackend.db.entities;
 
+import com.example.bilingualbackend.dto.requests.OptionRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,16 +17,16 @@ import static jakarta.persistence.CascadeType.*;
 public class Option {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "options_seq")
-    @SequenceGenerator(name = "options_seq", sequenceName = "options_seq",allocationSize = 1)
+    @SequenceGenerator(name = "options_seq", sequenceName = "options_seq",allocationSize = 1, initialValue = 13)
     private Long id;
     private String title;
     private String value;
-    private boolean isTrue;
+    private Boolean isTrue;
     @ManyToOne(cascade = {MERGE, REFRESH, DETACH})
     private Question question;
 
-    public Option(String value, boolean isTrue) {
-        this.value = value;
-        this.isTrue = isTrue;
+    public Option(OptionRequest request) {
+        this.value = request.getValue();
+        this.isTrue = request.getIsTrue();
     }
 }

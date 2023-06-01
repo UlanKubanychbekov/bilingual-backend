@@ -33,12 +33,12 @@ values (1, false, 'Select real English word', null, 1),
        (4, false, 'LISTEN_AND_SELECT_ENGLISH_WORD', 'https://bilingualbackendbucket.s3.eu-central-1.amazonaws.com/gvrw_unit001_exercise_02.mp3', 2),
        (5, true, 'LISTEN_AND_SELECT_ENGLISH_WORD', 'https://bilingualbackendbucket.s3.eu-central-1.amazonaws.com/gvrw_unit001_exercise_02.mp3', 2),
        (6, false, 'LISTEN_AND_SELECT_ENGLISH_WORD', 'https://bilingualbackendbucket.s3.eu-central-1.amazonaws.com/gvrw_unit001_exercise_02.mp3', 2),
-       (12, false, 'SELECT_THE_MAIN_IDEA', null, 8),
-       (13, true, 'SELECT_THE_MAIN_IDEA', null, 8),
-       (14, false, 'SELECT_THE_MAIN_IDEA', null, 8),
-       (15, true, 'SELECT_BEST_TITLE', null, 9),
-       (16, false, 'SELECT_BEST_TITLE', null, 9),
-       (17, true, 'SELECT_BEST_TITLE', null, 9);
+       (7, false, 'SELECT_THE_MAIN_IDEA', null, 8),
+       (8, true, 'SELECT_THE_MAIN_IDEA', null, 8),
+       (9, false, 'SELECT_THE_MAIN_IDEA', null, 8),
+       (10, true, 'SELECT_BEST_TITLE', null, 9),
+       (11, false, 'SELECT_BEST_TITLE', null, 9),
+       (12, true, 'SELECT_BEST_TITLE', null, 9);
 
 insert into results(id, date_of_submission, is_evaluated, is_seen, score, test_id, user_id)
 values (1, now(), false, false, 0, 1, 2),
@@ -61,8 +61,8 @@ values (1, 15, now(), 0, 1,true,true),
 insert into question_answers_selected_options(question_answer_id, selected_options_id)
 values (1, 2),
        (2, 6),
-       (8, 13),
-       (9, 16);
+       (8, 12),
+       (9, 11);
 
 insert into results_question_answers(result_id, question_answers_id)
 values (1, 1),

@@ -33,7 +33,7 @@ public class QuestionService {
 
         List<Option> options = new ArrayList<>();
         for (OptionRequest o : questionRequest.getOptionRequests()) {
-            options.add(new Option(o.getValue(), o.isTrue()));
+            options.add(new Option(o));
         }
 
         Question question = Question.builder()
@@ -42,6 +42,10 @@ public class QuestionService {
                 .duration(questionRequest.getDuration())
                 .options(options)
                 .build();
+
+        for (Option o : options) {
+            o.setQuestion(question);
+        }
 
         test.getQuestions().add(question);
         question.setTest(test);

@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface OptionRepository extends JpaRepository<Option, Long> {
 
-    List<OptionRequest> getOptionRequest();
 }

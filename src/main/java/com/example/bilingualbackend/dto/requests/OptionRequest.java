@@ -12,5 +12,5 @@ import lombok.Setter;
 public class OptionRequest {
 
     private String value;
-    private boolean isTrue;
+    private Boolean isTrue;
 }
