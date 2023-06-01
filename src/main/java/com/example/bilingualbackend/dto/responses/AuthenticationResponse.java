@@ -1,4 +1,4 @@
-package com.example.bilingualbackend.dto.responses.auth;
+package com.example.bilingualbackend.dto.responses;
 
 import com.example.bilingualbackend.db.enums.Role;
 import lombok.AllArgsConstructor;

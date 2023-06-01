@@ -7,7 +7,7 @@ import com.example.bilingualbackend.db.enums.Role;
 import com.example.bilingualbackend.db.repositories.UserRepository;
 import com.example.bilingualbackend.dto.requests.AuthenticationRequest;
 import com.example.bilingualbackend.dto.requests.SignUpRequest;
-import com.example.bilingualbackend.dto.responses.auth.AuthenticationResponse;
+import com.example.bilingualbackend.dto.responses.AuthenticationResponse;
 import com.example.bilingualbackend.exceptions.AlreadyExistException;
 import com.example.bilingualbackend.exceptions.BadCredentialException;
 import com.example.bilingualbackend.exceptions.BadRequestException;
