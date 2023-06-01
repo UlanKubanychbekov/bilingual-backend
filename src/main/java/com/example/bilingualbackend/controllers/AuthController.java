@@ -1,8 +1,8 @@
 package com.example.bilingualbackend.controllers;
 
 import com.example.bilingualbackend.db.services.AuthenticationService;
-import com.example.bilingualbackend.dto.requests.auth.AuthenticationRequest;
-import com.example.bilingualbackend.dto.requests.auth.SignUpRequest;
+import com.example.bilingualbackend.dto.requests.AuthenticationRequest;
+import com.example.bilingualbackend.dto.requests.SignUpRequest;
 import com.example.bilingualbackend.dto.responses.auth.AuthenticationResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
