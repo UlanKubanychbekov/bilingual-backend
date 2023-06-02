@@ -15,7 +15,7 @@ import static jakarta.persistence.CascadeType.*;
 public class Option {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "options_seq")
-    @SequenceGenerator(name = "options_seq", sequenceName = "options_seq",allocationSize = 1)
+    @SequenceGenerator(name = "options_seq", sequenceName = "options_seq", allocationSize = 1)
     private Long id;
     private String title;
     private String value;

@@ -6,6 +6,7 @@ type Mutation{
     signUp(email: String!, firstName: String!, lastName: String!, password: String!): AuthenticationResponse
     signIn(email: String!, password: String!): AuthenticationResponse
     authenticateWithGoogle(tokenId: String!): AuthenticationResponse
+    saveQuestionRecordSayingStatement(request: RecordSayingStatementQuestionRequest!): SimpleResponse
 }
 
 type AuthenticationResponse {
@@ -18,4 +19,16 @@ type AuthenticationResponse {
 enum Role {
     ADMIN,
     USER
+}
+
+input RecordSayingStatementQuestionRequest {
+    title: String!
+    statement: String!
+    duration: Int!
+    testId: ID!
+    isActive: Boolean!
+}
+
+type SimpleResponse{
+    message : String!
 }
