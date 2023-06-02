@@ -4,7 +4,7 @@ import com.example.bilingualbackend.config.jwt.JwtService;
 import com.example.bilingualbackend.db.entities.User;
 import com.example.bilingualbackend.db.enums.Role;
 import com.example.bilingualbackend.db.repositories.UserRepository;
-import com.example.bilingualbackend.dto.responses.auth.AuthenticationResponse;
+import com.example.bilingualbackend.dto.responses.AuthenticationResponse;
 import com.example.bilingualbackend.exceptions.NotFoundException;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
@@ -12,7 +12,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
-
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
-import javax.annotation.PostConstruct;
 
 @Service
 @Slf4j
