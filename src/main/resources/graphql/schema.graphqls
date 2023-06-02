@@ -1,5 +1,5 @@
 type Query {
-    users: String
+    refreshToken(refreshToken: String!): AuthenticationResponse
 }
 
 type Mutation{
@@ -11,7 +11,8 @@ type Mutation{
 
 type AuthenticationResponse {
     email: String
-    token: String
+    token: String!
+    refreshToken: String!
     role: Role
 }
 

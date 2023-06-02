@@ -42,18 +42,19 @@ public class AuthenticationService {
 
         userRepository.save(user);
 
-        var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse
-                .builder()
+        String jwtToken = jwtService.generateToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
+
+        return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .refreshToken(refreshToken)
                 .email(user.getEmail())
                 .role(user.getRole())
                 .build();
     }
 
     public AuthenticationResponse signIn(AuthenticationRequest authenticationRequest) {
-
-        var user = userRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow(
+        User user = userRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow(
                 () -> new NotFoundException("User with this email: " + authenticationRequest.getEmail() + " not found!")
         );
 
@@ -65,13 +66,40 @@ public class AuthenticationService {
             throw new BadCredentialException("incorrect password!");
         }
 
-        var jwt = jwtService.generateToken(user);
-        return AuthenticationResponse
-                .builder()
-                .token(jwt)
-                .email(user.getUsername())
+        String jwtToken = jwtService.generateToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
+
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .refreshToken(refreshToken)
+                .email(user.getEmail())
                 .role(user.getRole())
                 .build();
+    }
+
+    public AuthenticationResponse refreshToken(String refreshToken) {
+        if (refreshToken != null && refreshToken.startsWith("Bearer ")) {
+            String token = refreshToken.substring("Bearer ".length());
+
+            try {
+                String username = jwtService.extractUserEmail(token);
+
+                User user = userRepository.findByEmail(username).orElseThrow(() -> new NotFoundException(String.format("User with email %s not found!", username)));
+
+                String jwtToken = jwtService.generateToken(user);
+
+                return AuthenticationResponse.builder()
+                        .token(jwtToken)
+                        .refreshToken(token)
+                        .email(user.getEmail())
+                        .role(user.getRole())
+                        .build();
+            } catch (Exception e) {
+                throw new BadCredentialException("Invalid refresh token");
+            }
+        } else {
+            throw new BadCredentialException("Refresh token is missing");
+        }
     }
 
     public AuthenticationResponse authWithGoogle(String tokenId) {
