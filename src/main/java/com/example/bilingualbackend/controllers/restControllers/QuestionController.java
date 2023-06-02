@@ -1,13 +1,10 @@
-package com.example.bilingualbackend.controllers;
+package com.example.bilingualbackend.controllers.restControllers;
 
 import com.example.bilingualbackend.db.services.QuestionService;
 import com.example.bilingualbackend.dto.requests.QuestionRequest;
 import com.example.bilingualbackend.dto.responses.SimpleResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/questions")
@@ -18,6 +15,6 @@ public class QuestionController {
 
     @PostMapping("/save-select-real-word")
     public SimpleResponse saveSelectRealWordQuestion(@RequestBody QuestionRequest request) {
-        return questionService.saveSelectRealEnglishWords(request);
+        return questionService.saveSelectRealWords(request);
     }
 }

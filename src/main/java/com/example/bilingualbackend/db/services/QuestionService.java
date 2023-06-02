@@ -3,6 +3,7 @@ package com.example.bilingualbackend.db.services;
 import com.example.bilingualbackend.db.entities.Option;
 import com.example.bilingualbackend.db.entities.Question;
 import com.example.bilingualbackend.db.entities.Test;
+import com.example.bilingualbackend.db.enums.QuestionType;
 import com.example.bilingualbackend.db.repositories.QuestionRepository;
 import com.example.bilingualbackend.db.repositories.TestRepository;
 import com.example.bilingualbackend.dto.requests.OptionRequest;
@@ -24,7 +25,7 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final TestRepository testRepository;
 
-    public SimpleResponse saveSelectRealEnglishWords(QuestionRequest questionRequest) {
+    public SimpleResponse saveSelectRealWords(QuestionRequest questionRequest) {
         Test test = testRepository.findById(questionRequest.getTestId()).orElseThrow(() ->
                 new NotFoundException(
                         "Test with id: " + questionRequest.getTestId() + " not found!"
@@ -32,13 +33,15 @@ public class QuestionService {
         );
 
         List<Option> options = new ArrayList<>();
-        for (OptionRequest o : questionRequest.getOptionRequests()) {
-            options.add(new Option(o));
+        if (questionRequest.getOptionRequests() != null) {
+            for (OptionRequest o : questionRequest.getOptionRequests()) {
+                options.add(new Option(o));
+            }
         }
 
         Question question = Question.builder()
                 .title(questionRequest.getTitle())
-                .questionType(questionRequest.getQuestionType())
+                .questionType(QuestionType.SELECT_ENGLISH_WORD)
                 .duration(questionRequest.getDuration())
                 .options(options)
                 .build();
