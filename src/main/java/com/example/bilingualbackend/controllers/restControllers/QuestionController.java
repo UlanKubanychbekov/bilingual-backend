@@ -7,8 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/questions")
 @RequiredArgsConstructor
+@RequestMapping("/api/questions")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class QuestionController {
 
     private final QuestionService questionService;
