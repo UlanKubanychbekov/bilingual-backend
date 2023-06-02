@@ -2,7 +2,9 @@ type Query {
     users: String
     findAll: [TestResponse!]!
     findById(id: ID!) : TestResponse
+    refreshToken(refreshToken: String!): AuthenticationResponse
 }
+
 type Mutation{
     signUp(email: String!, firstName: String!, lastName: String!, password: String!): AuthenticationResponse
     signIn(email: String!, password: String!): AuthenticationResponse
@@ -13,7 +15,8 @@ type Mutation{
 
 type AuthenticationResponse {
     email: String
-    token: String
+    token: String!
+    refreshToken: String!
     role: Role
 }
 
