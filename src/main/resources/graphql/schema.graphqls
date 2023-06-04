@@ -13,6 +13,7 @@ type Mutation{
     create(testRequest: TestRequest!): SimpleResponse!
     update(id: ID!, testRequest: TestRequest!): SimpleResponse!
     delete(id: ID!) : ID
+    saveHighlightTheAnswer(questionRequest: QuestionRequest!): SimpleResponse
 }
 
 type AuthenticationResponse {

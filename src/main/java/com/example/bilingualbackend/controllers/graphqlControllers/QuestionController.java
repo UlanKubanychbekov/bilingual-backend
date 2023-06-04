@@ -19,4 +19,9 @@ public class QuestionController {
     SimpleResponse saveSelectRealWords(@Argument QuestionRequest questionRequest) {
         return questionService.saveSelectRealWords(questionRequest);
     }
+
+    @MutationMapping(name = "saveHighlightTheAnswer")
+    SimpleResponse saveHighlightTheAnswer(@Argument QuestionRequest questionRequest) {
+        return questionService.saveHighLightTheAnswer(questionRequest);
+    }
 }
