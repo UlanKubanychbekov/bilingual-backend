@@ -1,4 +1,7 @@
 type Query {
+    users: String
+    findAll: [TestResponse!]!
+    findById(id: ID!) : TestResponse
     refreshToken(refreshToken: String!): AuthenticationResponse
 }
 
@@ -7,6 +10,9 @@ type Mutation{
     signIn(email: String!, password: String!): AuthenticationResponse
     authenticateWithGoogle(tokenId: String!): AuthenticationResponse
     saveSelectRealWords(questionRequest: QuestionRequest!): SimpleResponse
+    create(testRequest: TestRequest!): SimpleResponse!
+    update(id: ID!, testRequest: TestRequest!): SimpleResponse!
+    delete(id: ID!) : ID
 }
 
 type AuthenticationResponse {
@@ -36,4 +42,24 @@ input QuestionRequest {
 input OptionRequest {
     value : String!
     isTrue : Boolean!
+}
+
+type SimpleResponse{
+    message : String!
+}
+
+type TestResponse {
+    id: ID!
+    title: String!
+    description: String!
+    enable: Boolean!
+    duration: Int!
+
+}
+
+input TestRequest {
+    title: String
+    description: String
+    enable: Boolean
+    duration: Int
 }

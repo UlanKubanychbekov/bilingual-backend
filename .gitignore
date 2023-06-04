@@ -31,5 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+src/main/resources/application-ainazik.properties
+src/main/resources/application-datka.properties
 
-src/main/resources/application-ulan.properties
