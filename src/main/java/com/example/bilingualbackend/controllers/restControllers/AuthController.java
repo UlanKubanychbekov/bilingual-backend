@@ -1,4 +1,4 @@
-package com.example.bilingualbackend.controllers.rest;
+package com.example.bilingualbackend.controllers.restControllers;
 
 import com.example.bilingualbackend.db.services.AuthenticationService;
 import com.example.bilingualbackend.dto.requests.AuthenticationRequest;

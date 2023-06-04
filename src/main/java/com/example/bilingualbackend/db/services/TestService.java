@@ -33,7 +33,7 @@ public class TestService {
         test.setDuration(testRequest.getDuration());
         test.setEnable(testRequest.isEnable());
         testRepository.save(test);
-        return new SimpleResponse(String.format("Successfully created a new test with %s", test.getId()));
+        return new SimpleResponse(String.format("Successfully created a new test with %s", test.getId()), "Ok");
     }
 
     @Transactional
@@ -45,7 +45,7 @@ public class TestService {
         test.setDescription(testRequest.getDescription());
         test.setEnable(testRequest.isEnable());
         test.setDuration(testRequest.getDuration());
-        return new SimpleResponse(String.format("Updated test with id: %s", id));
+        return new SimpleResponse(String.format("Updated test with id: %s", id), "Ok");
     }
 
     public TestResponse findById(Long id) {
@@ -54,6 +54,6 @@ public class TestService {
 
     public SimpleResponse delete(Long id) {
         testRepository.deleteById(id);
-        return new SimpleResponse(String.format("Successfully deleted a test with id: %s", id));
+        return new SimpleResponse(String.format("Successfully deleted a test with id: %s", id), "Ok");
     }
 }
