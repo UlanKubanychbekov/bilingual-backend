@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 @RequiredArgsConstructor
-public class QuestionController {
+public class QuestionGraphqlController {
 
     private final QuestionService questionService;
 
@@ -18,10 +18,5 @@ public class QuestionController {
     @MutationMapping(name = "saveSelectRealWords")
     SimpleResponse saveSelectRealWords(@Argument QuestionRequest questionRequest) {
         return questionService.saveSelectRealWords(questionRequest);
-    }
-
-    @MutationMapping(name = "saveHighlightTheAnswer")
-    SimpleResponse saveHighlightTheAnswer(@Argument QuestionRequest questionRequest) {
-        return questionService.saveHighLightTheAnswer(questionRequest);
     }
 }

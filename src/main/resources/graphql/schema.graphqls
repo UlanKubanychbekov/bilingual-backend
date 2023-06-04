@@ -8,12 +8,11 @@ type Query {
 type Mutation{
     signUp(email: String!, firstName: String!, lastName: String!, password: String!): AuthenticationResponse
     signIn(email: String!, password: String!): AuthenticationResponse
-    authenticateWithGoogle(tokenId: String!): AuthenticationResponse
+#    authenticateWithGoogle(tokenId: String!): AuthenticationResponse
     saveSelectRealWords(questionRequest: QuestionRequest!): SimpleResponse
     create(testRequest: TestRequest!): SimpleResponse!
     update(id: ID!, testRequest: TestRequest!): SimpleResponse!
     delete(id: ID!) : ID
-    saveHighlightTheAnswer(questionRequest: QuestionRequest!): SimpleResponse
 }
 
 type AuthenticationResponse {
@@ -45,9 +44,6 @@ input OptionRequest {
     isTrue : Boolean!
 }
 
-type SimpleResponse{
-    message : String!
-}
 
 type TestResponse {
     id: ID!
