@@ -59,6 +59,7 @@ input QuestionMainRequest {
     testId: ID!
     title: String
     passage: String
+    correctAnswer: String
     statement: String
     duration: Int
     isActive: Boolean
