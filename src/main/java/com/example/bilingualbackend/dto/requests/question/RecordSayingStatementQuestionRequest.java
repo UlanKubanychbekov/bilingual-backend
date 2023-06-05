@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class RecordSayingStatementQuestionRequest {
+public class RecordSayingStatementQuestionRequest extends QuestionMainRequest {
     @NotNull(message = "The title must not be empty.")
     private String title;
     @NotNull(message = "The statement must not be empty.")

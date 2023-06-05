@@ -13,8 +13,8 @@ import org.springframework.stereotype.Controller;
 public class QuestionController {
     private final QuestionService questionService;
 
-    @MutationMapping(name = "saveQuestionRecordSayingStatement")
-    public SimpleResponse saveQuestionRecordSayingStatement(@Argument RecordSayingStatementQuestionRequest request){
-        return questionService.saveRecordSayingStatement(request);
+    @MutationMapping(name = "saveQuestion")
+    public SimpleResponse saveQuestion(@Argument RecordSayingStatementQuestionRequest request){
+        return questionService.saveQuestion(request);
     }
 }

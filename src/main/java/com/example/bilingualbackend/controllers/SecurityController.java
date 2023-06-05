@@ -1,8 +1,8 @@
-package com.example.bilingualbackend.controllers.graphqlControllers;
+package com.example.bilingualbackend.controllers;
 
 import com.example.bilingualbackend.db.services.AuthenticationService;
-import com.example.bilingualbackend.dto.requests.AuthenticationRequest;
-import com.example.bilingualbackend.dto.requests.SignUpRequest;
+import com.example.bilingualbackend.dto.requests.auth.AuthenticationRequest;
+import com.example.bilingualbackend.dto.requests.auth.SignUpRequest;
 import com.example.bilingualbackend.dto.responses.AuthenticationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
