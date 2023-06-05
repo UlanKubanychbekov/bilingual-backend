@@ -1,9 +1,7 @@
 package com.example.bilingualbackend.db.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import static jakarta.persistence.CascadeType.*;
 
@@ -12,6 +10,8 @@ import static jakarta.persistence.CascadeType.*;
 @Entity
 @Table(name = "options")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Option {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "options_seq")
