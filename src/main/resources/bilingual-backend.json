@@ -1,8 +1,13 @@
-FileInputStream serviceAccount =
-new FileInputStream("path/to/serviceAccountKey.json");
-
-FirebaseOptions options = new FirebaseOptions.Builder()
-.setCredentials(GoogleCredentials.fromStream(serviceAccount))
-.build();
-
-FirebaseApp.initializeApp(options);
+{
+  "type": "service_account",
+  "project_id": "bilingual-387106",
+  "private_key_id": "14e4f5c31142c8c41c7f09e82c91e7c938721ef6",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCCqI9jkIt6HT1y\n2nvBReXd+V42vO3vnUz8EhQssWbm/ybIudpL2EEJ/8/+IsoGLS5y29/OspfKk3wz\npR/uSY3H/CzveOllKsbhxCHeXQG6ZY37oZl7uvH3nbtpF3ScGzJAYE0dizGdMAus\nnzXc/Vx2DujDPPoGibp+y5TpoIKjlSjba1PpIZ/qprr7TON3J0GyU8YJtQxfA+Qc\nZz2yqdCr/ZxaR6VOl4H8OjWs/0HZGZzFDE3vMIDz5eBkVnq17dPhiytXymHSNHIu\nIuc1t14o2PNOQsm8pQ5CC3OFsgyZYDUtVUWyp3AalWHfBBEOMxOT7in/FzOfQnsy\nZhICJ4BJAgMBAAECggEAHqcrfrUQV92Ix0uFOaZro4xHo2lnG+5IO6IFLCgRh3OI\nVpKtqVoKhi1HD2z7fv/2E/nME7rX/C1mN9qPN3D3q5mYtDTmcrbasmg4dunUiDWf\nng9/SeUls81ERMc9Mwt5WluNc/cuNF2re3vdn+Mr4EGmr3k8gjCpOWqLHNVsmLJF\ns0a/MVVDBiYsSHlIoqTbxqA756Q5YpsB4bmdjoZdmJGnBcBqtyfXRa1za8LBIcmx\nJxAAQypfvNDuUWtffzIqAlmspYDA9nEqm3ttCVROHfjp0hcR+w2VFqQeEAe4Byl3\nxvfvOumUx4XUV+a6KB0PuGJiuKrVebxPaYEdPnHYtQKBgQC3N2tkLt/AAXhDRkEq\nK+JEirwRbcPavFj5tt/CerHTJ78Uj7C7o+5h+a4hlHirnsK9Ty1b8Ei0NTGt+tYD\nyC3pYJaN02HlgU1PA7wIiWqhmoxnljW9G5zpsWq06rzQ2+wAADFY3+Qh3HZZedEB\npr+Avzc0P7BvF7hvKvc/rGKLvQKBgQC2kCQkhhjtD9GsYbLBkxLD3J78OkUzouLJ\nDQNTEqPxS+VkdQvY4uIPtpxLSZhM2ZvxW/gSwZn/3bMRD2rP/TgY8vS5PJspLswO\nGtqt9XV8Bx21TohVhoLhkLQdFHMFHwtrzWT1C/4ZJdbfkttr1Ofj19KEsT5lpcI2\nuRsmisgpfQKBgHIFqW31xgYmZAPqKw/ls7FYbeai2yq74Nu3tdXAqf5xU/el3SVJ\nxkdvLbF0Rwz3htZt+hqnlXehS0OtQZek8v20wL2O+fPs3oH4HwNpEdV060BkORlx\nn9vIMFJbbBrHYz404IEhBUcVfwn8R9ixP6kOV3rK0DCzIHL+2FTmIYY5AoGAbA7f\nRbsVr+OoIJdnXgp2lfXVKMg4w7qK76PDLv2eiil5Kr/Y9lQ8qD5XPnzeJ8a59d+Q\n81EinP8ViWiNuXRRKvtLfQTxdivb3hFpFIRwOKxhmjpUmgLXHzouUfQTrJlWgkV9\nl0m06h+qkoTzWV0YsJTDZ4UdwL6fORLRjjuhBGUCgYBKPz7PCg0rRd/GBfd0xoe0\nXpUreatfuwXd/+SvqZ+mO9nd0GWaaH3PSZUPiDEGkDUnw6KsEEQL7JsjNwI2dzyx\nQGc5YCP7B1Sna2n4ZIHxVn+Q9J1zi50uFbU6DI021mK5FuwjCZkrJ2REVw77wbjI\nV1eW9tnNnJ9AIw095SWeWA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-ita6y@bilingual-387106.iam.gserviceaccount.com",
+  "client_id": "118166715895103683291",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ita6y%40bilingual-387106.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
