@@ -1,7 +1,6 @@
 package com.example.bilingualbackend.controllers;
 
 import com.example.bilingualbackend.db.services.QuestionService;
-import com.example.bilingualbackend.dto.requests.QuestionRequest;
 import com.example.bilingualbackend.dto.requests.question.RecordSayingStatementQuestionRequest;
 import com.example.bilingualbackend.dto.responses.SimpleResponse;
 import lombok.RequiredArgsConstructor;
