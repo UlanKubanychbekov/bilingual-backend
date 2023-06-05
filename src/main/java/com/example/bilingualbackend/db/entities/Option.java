@@ -1,5 +1,6 @@
 package com.example.bilingualbackend.db.entities;
 
+import com.example.bilingualbackend.dto.requests.question.OptionSelectMainIdeaRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,8 +24,8 @@ public class Option {
     @ManyToOne(cascade = {MERGE, REFRESH, DETACH})
     private Question question;
 
-    public Option(OptionRequest request) {
+    public Option(OptionSelectMainIdeaRequest request) {
         this.value = request.getValue();
-        this.isTrue = request.getIsTrue();
+        this.isTrue = request.isCorrect();
     }
 }

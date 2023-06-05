@@ -6,6 +6,7 @@ import com.example.bilingualbackend.db.entities.Test;
 import com.example.bilingualbackend.db.enums.QuestionType;
 import com.example.bilingualbackend.db.repositories.QuestionRepository;
 import com.example.bilingualbackend.db.repositories.TestRepository;
+import com.example.bilingualbackend.dto.requests.question.OptionSelectMainIdeaRequest;
 import com.example.bilingualbackend.dto.requests.question.QuestionMainRequest;
 import com.example.bilingualbackend.dto.responses.SimpleResponse;
 import com.example.bilingualbackend.exceptions.NotFoundException;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +24,67 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class QuestionService {
 
+    private final QuestionRepository questionRepository;
+    private final TestRepository testRepository;
+
+    private SimpleResponse saveSelectRealWord(QuestionMainRequest request) {
+        Test test = testRepository.findById(request.getTestId()).orElseThrow(() ->
+                new NotFoundException(
+                        "Test with id: " + request.getTestId() + " not found!"
+                )
+        );
+
+        List<Option> options = new ArrayList<>();
+        if (request.getOptionRequests() != null) {
+            for (OptionSelectMainIdeaRequest o : request.getOptionRequests()) {
+                options.add(new Option(o));
+            }
+        }
+
+        Question question = Question.builder()
+                .title(request.getTitle())
+                .questionType(QuestionType.SELECT_ENGLISH_WORD)
+                .duration(request.getDuration())
+                .options(options)
+                .build();
+
+        for (Option o : options) {
+            o.setQuestion(question);
+        }
+
+        test.getQuestions().add(question);
+        question.setTest(test);
+        questionRepository.save(question);
+
+        return new SimpleResponse(
+                "Question with " + QuestionType.SELECT_ENGLISH_WORD + " type is save successfully!");
+
+    }
+
+    public SimpleResponse saveHighLightTheAnswer(QuestionMainRequest request) {
+
+        Test test = testRepository.findById(request.getTestId()).orElseThrow(() ->
+                new NotFoundException(
+                        "Test with id: " + request.getTestId() + " not found!"
+                )
+        );
+
+        Question question = Question.builder()
+                .title(request.getTitle())
+                .questionType(QuestionType.HIGHLIGHT_THE_ANSWER)
+                .duration(request.getDuration())
+                .passage(request.getPassage())
+                .correctAnswer(request.getCorrectAnswer())
+                .build();
+
+        test.getQuestions().add(question);
+        question.setTest(test);
+        questionRepository.save(question);
+
+        return SimpleResponse.builder()
+                .message("Question with " + QuestionType.HIGHLIGHT_THE_ANSWER + " type is save successfully!")
+                .build();
+    }
 
     private SimpleResponse saveSelectMainIdeaQuestion(QuestionMainRequest request) {
 //      FIELDS:
@@ -92,6 +153,12 @@ public class QuestionService {
 
     public SimpleResponse saveQuestion(QuestionMainRequest questionMainRequest) {
         switch (questionMainRequest.getQuestionType()) {
+            case SELECT_ENGLISH_WORD -> {
+                return saveSelectRealWord(questionMainRequest);
+            }
+            case HIGHLIGHT_THE_ANSWER -> {
+                return saveHighLightTheAnswer(questionMainRequest);
+            }
             case RECORD_SAYING_STATEMENT -> {
                 return saveRecordSayingStatement(questionMainRequest);
             }
