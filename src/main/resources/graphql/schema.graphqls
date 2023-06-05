@@ -8,9 +8,11 @@ type Query {
 type Mutation{
     signUp(email: String!, firstName: String!, lastName: String!, password: String!): AuthenticationResponse
     signIn(email: String!, password: String!): AuthenticationResponse
-    create(testRequest: TestRequest!): SimpleResponse!
-    update(id: ID!, testRequest: TestRequest!): SimpleResponse!
-    delete(id: ID!) : ID
+    createTest(testRequest: TestRequest!): SimpleResponse!
+    updateTest(id: ID!, testRequest: TestRequest!): SimpleResponse!
+    deleteTest(id: ID!) : ID
+    authenticateWithGoogle(tokenId: String!): AuthenticationResponse
+    saveQuestion(request: RecordSayingStatementQuestionRequest): SimpleResponse
 }
 
 type AuthenticationResponse {
@@ -24,9 +26,7 @@ enum Role {
     ADMIN,
     USER
 }
-type SimpleResponse{
-    message : String!
-}
+
 type TestResponse {
     id: ID!
     title: String!
@@ -43,3 +43,14 @@ input TestRequest {
     duration: Int
 }
 
+input RecordSayingStatementQuestionRequest {
+    title: String!
+    statement: String!
+    duration: Int!
+    testId: ID!
+    isActive: Boolean!
+}
+
+type SimpleResponse{
+    message : String!
+}

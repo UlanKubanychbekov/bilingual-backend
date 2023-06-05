@@ -1,7 +1,7 @@
-package com.example.bilingualbackend.controllers.graphqlControllers;
+package com.example.bilingualbackend.controllers;
 
 import com.example.bilingualbackend.db.services.TestService;
-import com.example.bilingualbackend.dto.requests.TestRequest;
+import com.example.bilingualbackend.dto.requests.test.TestRequest;
 import com.example.bilingualbackend.dto.responses.SimpleResponse;
 import com.example.bilingualbackend.dto.responses.TestResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,28 +19,28 @@ import java.util.List;
 public class TestController {
     private final TestService testService;
 
-    @MutationMapping(name = "create")
+    @MutationMapping(name = "createTest")
     public SimpleResponse create(@Argument TestRequest testRequest) {
 
         return testService.createNewTest(testRequest);
     }
 
-    @QueryMapping()
+    @QueryMapping
     public List<TestResponse> findAll() {
         return testService.getAllTests();
     }
 
-    @QueryMapping(name = "findById")
+    @QueryMapping(name = "findByIdTest")
     public TestResponse findById(@Argument Long id) {
         return testService.findById(id);
     }
 
-    @MutationMapping(name = "update")
+    @MutationMapping(name = "updateTest")
     public SimpleResponse update(@Argument Long id, @Argument TestRequest testRequest) {
         return testService.updateTest(id, testRequest);
     }
 
-    @MutationMapping(name = "delete")
+    @MutationMapping(name = "deleteTest")
     public SimpleResponse delete(@Argument Long id) {
         return testService.delete(id);
     }
