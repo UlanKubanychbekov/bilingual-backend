@@ -1,10 +1,16 @@
 type Query {
+    users: String
+    findAll: [TestResponse!]!
+    findById(id: ID!) : TestResponse
     refreshToken(refreshToken: String!): AuthenticationResponse
 }
 
 type Mutation{
     signUp(email: String!, firstName: String!, lastName: String!, password: String!): AuthenticationResponse
     signIn(email: String!, password: String!): AuthenticationResponse
+    create(testRequest: TestRequest!): SimpleResponse!
+    update(id: ID!, testRequest: TestRequest!): SimpleResponse!
+    delete(id: ID!) : ID
     authenticateWithGoogle(tokenId: String!): AuthenticationResponse
     saveQuestionRecordSayingStatement(request: RecordSayingStatementQuestionRequest!): SimpleResponse
 }
@@ -20,6 +26,23 @@ enum Role {
     ADMIN,
     USER
 }
+
+type TestResponse {
+    id: ID!
+    title: String!
+    description: String!
+    enable: Boolean!
+    duration: Int!
+
+}
+
+input TestRequest {
+    title: String
+    description: String
+    enable: Boolean
+    duration: Int
+}
+
 
 input RecordSayingStatementQuestionRequest {
     title: String!
