@@ -32,67 +32,68 @@ public class QuestionService {
                 )
         );
 
-//        if (questionRequest.getQuestionType().equals(QuestionType.SELECT_ENGLISH_WORD)) {
-        List<Option> options = new ArrayList<>();
-        if (questionRequest.getOptionRequests() != null) {
-            for (OptionRequest o : questionRequest.getOptionRequests()) {
-                options.add(new Option(o));
+        if (questionRequest.getQuestionType().equals(QuestionType.SELECT_ENGLISH_WORD)) {
+            List<Option> options = new ArrayList<>();
+            if (questionRequest.getOptionRequests() != null) {
+                for (OptionRequest o : questionRequest.getOptionRequests()) {
+                    options.add(new Option(o));
+                }
             }
+
+            Question question = Question.builder()
+                    .title(questionRequest.getTitle())
+                    .questionType(QuestionType.SELECT_ENGLISH_WORD)
+                    .duration(questionRequest.getDuration())
+                    .options(options)
+                    .build();
+
+            for (Option o : options) {
+                o.setQuestion(question);
+            }
+
+            test.getQuestions().add(question);
+            question.setTest(test);
+            questionRepository.save(question);
+
+        } else if (questionRequest.getQuestionType().equals(QuestionType.HIGHLIGHT_THE_ANSWER)) {
+            Question question = Question.builder()
+                    .title(questionRequest.getTitle())
+                    .questionType(QuestionType.HIGHLIGHT_THE_ANSWER)
+                    .duration(questionRequest.getDuration())
+                    .passage(questionRequest.getPassage())
+                    .correctAnswer(questionRequest.getCorrectAnswer())
+                    .build();
+
+            test.getQuestions().add(question);
+            question.setTest(test);
+            questionRepository.save(question);
         }
-
-        Question question = Question.builder()
-                .title(questionRequest.getTitle())
-                .questionType(QuestionType.SELECT_ENGLISH_WORD)
-                .duration(questionRequest.getDuration())
-                .options(options)
-                .build();
-
-        for (Option o : options) {
-            o.setQuestion(question);
-        }
-
-        test.getQuestions().add(question);
-        question.setTest(test);
-        questionRepository.save(question);
-
-//        } else if (questionRequest.getQuestionType().equals(QuestionType.HIGHLIGHT_THE_ANSWER)) {
-//            Question question = Question.builder()
-//                    .title(questionRequest.getTitle())
-//                    .questionType(QuestionType.HIGHLIGHT_THE_ANSWER)
-//                    .duration(questionRequest.getDuration())
-//                    .passage(questionRequest.getPassage())
-//                    .correctAnswer(questionRequest.getCorrectAnswer())
-//                    .build();
-//
-//            test.getQuestions().add(question);
-//            question.setTest(test);
-//            questionRepository.save(question);
-//        }
 
         return new SimpleResponse("Question is saved successfully!", "Ok");
+
     }
 
-    public SimpleResponse saveHighLightTheAnswer(QuestionRequest questionRequest) {
-        Test test = testRepository.findById(questionRequest.getTestId()).orElseThrow(() ->
-                new NotFoundException(
-                        "Test with id: " + questionRequest.getTestId() + " not found!"
-                )
-        );
-
-        Question question = Question.builder()
-                .title(questionRequest.getTitle())
-                .questionType(QuestionType.HIGHLIGHT_THE_ANSWER)
-                .duration(questionRequest.getDuration())
-                .passage(questionRequest.getPassage())
-                .correctAnswer(questionRequest.getCorrectAnswer())
-                .build();
-
-        test.getQuestions().add(question);
-        question.setTest(test);
-        questionRepository.save(question);
-
-        return new SimpleResponse(
-                "Question with id: " + question.getId() + " is successfully saved!",
-                "Ok");
-    }
+//    public SimpleResponse saveHighLightTheAnswer(QuestionRequest questionRequest) {
+//        Test test = testRepository.findById(questionRequest.getTestId()).orElseThrow(() ->
+//                new NotFoundException(
+//                        "Test with id: " + questionRequest.getTestId() + " not found!"
+//                )
+//        );
+//
+//        Question question = Question.builder()
+//                .title(questionRequest.getTitle())
+//                .questionType(QuestionType.HIGHLIGHT_THE_ANSWER)
+//                .duration(questionRequest.getDuration())
+//                .passage(questionRequest.getPassage())
+//                .correctAnswer(questionRequest.getCorrectAnswer())
+//                .build();
+//
+//        test.getQuestions().add(question);
+//        question.setTest(test);
+//        questionRepository.save(question);
+//
+//        return new SimpleResponse(
+//                "Question with id: " + question.getId() + " is successfully saved!",
+//                "Ok");
+//    }
 }
