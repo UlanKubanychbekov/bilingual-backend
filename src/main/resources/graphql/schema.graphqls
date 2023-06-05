@@ -12,7 +12,7 @@ type Mutation{
     updateTest(id: ID!, testRequest: TestRequest!): SimpleResponse!
     deleteTest(id: ID!) : ID
     authenticateWithGoogle(tokenId: String!): AuthenticationResponse
-    saveQuestion(request: RecordSayingStatementQuestionRequest): SimpleResponse
+    saveQuestion(request: QuestionMainRequest): SimpleResponse
 }
 
 type AuthenticationResponse {
@@ -27,13 +27,24 @@ enum Role {
     USER
 }
 
+enum QuestionType {
+    SELECT_ENGLISH_WORD,
+    TYPE_WHAT_YOU_HEAR,
+    DESCRIBE_IMAGE,
+    LISTEN_AND_SELECT_ENGLISH_WORD,
+    RECORD_SAYING_STATEMENT,
+    RESPOND_N_WORDS,
+    HIGHLIGHT_THE_ANSWER,
+    SELECT_THE_MAIN_IDEA,
+    SELECT_BEST_TITLE
+}
+
 type TestResponse {
     id: ID!
     title: String!
     description: String!
     enable: Boolean!
     duration: Int!
-
 }
 
 input TestRequest {
@@ -43,12 +54,20 @@ input TestRequest {
     duration: Int
 }
 
-input RecordSayingStatementQuestionRequest {
-    title: String!
-    statement: String!
-    duration: Int!
+input QuestionMainRequest {
+    questionType: QuestionType!
     testId: ID!
-    isActive: Boolean!
+    title: String
+    passage: String
+    statement: String
+    duration: Int
+    isActive: Boolean
+    optionRequests: [OptionSelectMainIdeaRequest]
+}
+
+input OptionSelectMainIdeaRequest {
+    value: String!
+    isCorrect: Boolean!
 }
 
 type SimpleResponse{

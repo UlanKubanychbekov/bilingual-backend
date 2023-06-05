@@ -1,4 +1,4 @@
-package com.example.bilingualbackend.dto.requests;
+package com.example.bilingualbackend.dto.requests.question;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

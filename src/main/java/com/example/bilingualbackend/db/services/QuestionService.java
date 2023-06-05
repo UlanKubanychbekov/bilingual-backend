@@ -6,9 +6,7 @@ import com.example.bilingualbackend.db.entities.Test;
 import com.example.bilingualbackend.db.enums.QuestionType;
 import com.example.bilingualbackend.db.repositories.QuestionRepository;
 import com.example.bilingualbackend.db.repositories.TestRepository;
-import com.example.bilingualbackend.dto.requests.QuestionMainRequest;
-import com.example.bilingualbackend.dto.requests.RecordSayingStatementQuestionRequest;
-import com.example.bilingualbackend.dto.requests.SelectMainIdeaQuestionRequest;
+import com.example.bilingualbackend.dto.requests.question.QuestionMainRequest;
 import com.example.bilingualbackend.dto.responses.SimpleResponse;
 import com.example.bilingualbackend.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +21,15 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final TestRepository testRepository;
 
-    private SimpleResponse saveSelectMainIdeaQuestion(SelectMainIdeaQuestionRequest request) {
+    private SimpleResponse saveSelectMainIdeaQuestion(QuestionMainRequest request) {
+//      FIELDS:
+//      String title;
+//      Integer duration;
+//      String passage;
+//      List<OptionSelectMainIdeaRequest> optionRequests;
+//      Long testId;
+//      boolean isActive;
+
         Test test = testRepository.findById(request.getTestId())
                 .orElseThrow(() -> new NotFoundException(String.format("Test with ID %s doesn't exist", request.getTestId())));
 
@@ -41,6 +47,7 @@ public class QuestionService {
                         .isTrue(x.isCorrect())
                         .value(x.getValue())
                         .question(question)
+                        .title(question.getQuestionType().name())
                         .build())
                 .collect(Collectors.toList());
 
@@ -53,7 +60,14 @@ public class QuestionService {
                 .build();
     }
 
-    public SimpleResponse saveRecordSayingStatement(RecordSayingStatementQuestionRequest request) {
+    public SimpleResponse saveRecordSayingStatement(QuestionMainRequest request) {
+//      FIELDS:
+//      String title;
+//      String statement;
+//      Integer duration;
+//      Long testId;
+//      Boolean isActive;
+
         Test test = testRepository.findById(request.getTestId())
                 .orElseThrow(() -> new NotFoundException(String.format("Test with ID %s doesn't exist", request.getTestId())));
 
@@ -63,7 +77,7 @@ public class QuestionService {
                 .correctAnswer(request.getStatement())
                 .duration(request.getDuration())
                 .test(test)
-                .enable(request.getIsActive())
+                .enable(request.isActive())
                 .build();
         questionRepository.save(question);
 
@@ -73,14 +87,18 @@ public class QuestionService {
     }
 
     public SimpleResponse saveQuestion(QuestionMainRequest questionMainRequest) {
-        if (questionMainRequest instanceof SelectMainIdeaQuestionRequest) {
-            return saveSelectMainIdeaQuestion((SelectMainIdeaQuestionRequest) questionMainRequest);
-        } else if (questionMainRequest instanceof RecordSayingStatementQuestionRequest) {
-            return saveRecordSayingStatement((RecordSayingStatementQuestionRequest) questionMainRequest);
+        switch (questionMainRequest.getQuestionType()) {
+            case RECORD_SAYING_STATEMENT -> {
+                return saveRecordSayingStatement(questionMainRequest);
+            }
+            case SELECT_THE_MAIN_IDEA -> {
+                return saveSelectMainIdeaQuestion(questionMainRequest);
+            }
+            default -> {
+                return SimpleResponse.builder()
+                        .message("Something went wrong...")
+                        .build();
+            }
         }
-
-        return SimpleResponse.builder()
-                .message("Invalid question request")
-                .build();
     }
 }
