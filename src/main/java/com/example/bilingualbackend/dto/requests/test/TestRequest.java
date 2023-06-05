@@ -1,4 +1,4 @@
-package com.example.bilingualbackend.dto.requests;
+package com.example.bilingualbackend.dto.requests.test;
 
 import lombok.Getter;
 import lombok.Setter;
