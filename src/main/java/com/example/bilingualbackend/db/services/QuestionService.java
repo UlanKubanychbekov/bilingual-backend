@@ -8,6 +8,8 @@ import com.example.bilingualbackend.db.repositories.QuestionRepository;
 import com.example.bilingualbackend.db.repositories.TestRepository;
 import com.example.bilingualbackend.dto.requests.OptionRequest;
 import com.example.bilingualbackend.dto.requests.QuestionRequest;
+import com.example.bilingualbackend.dto.requests.question.QuestionMainRequest;
+import com.example.bilingualbackend.dto.requests.question.RecordSayingStatementQuestionRequest;
 import com.example.bilingualbackend.dto.responses.SimpleResponse;
 import com.example.bilingualbackend.exceptions.NotFoundException;
 import jakarta.transaction.Transactional;
@@ -25,7 +27,7 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final TestRepository testRepository;
 
-    public SimpleResponse saveSelectRealWords(QuestionRequest questionRequest) {
+    public SimpleResponse saveQuestion(QuestionRequest questionRequest) {
         Test test = testRepository.findById(questionRequest.getTestId()).orElseThrow(() ->
                 new NotFoundException(
                         "Test with id: " + questionRequest.getTestId() + " not found!"
@@ -80,20 +82,7 @@ public class QuestionService {
         return null;
 
     }
-}
 
-import com.example.bilingualbackend.dto.requests.question.QuestionMainRequest;
-import com.example.bilingualbackend.dto.requests.question.RecordSayingStatementQuestionRequest;
-import com.example.bilingualbackend.dto.responses.SimpleResponse;
-import com.example.bilingualbackend.exceptions.NotFoundException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-@Service
-@RequiredArgsConstructor
-public class QuestionService {
-    private final QuestionRepository questionRepository;
-    private final TestRepository testRepository;
 
     private SimpleResponse saveRecordSayingStatement(RecordSayingStatementQuestionRequest request) {
         Test test = testRepository.findById(request.getTestId())
@@ -114,7 +103,7 @@ public class QuestionService {
                 .build();
     }
 
-    public SimpleResponse saveQuestion(QuestionMainRequest questionMainRequest) {
+    public SimpleResponse saveQuestionSyimykMethod(QuestionMainRequest questionMainRequest) {
         if (questionMainRequest instanceof RecordSayingStatementQuestionRequest) {
             return saveRecordSayingStatement((RecordSayingStatementQuestionRequest) questionMainRequest);
         }
