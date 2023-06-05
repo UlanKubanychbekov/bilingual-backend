@@ -8,6 +8,11 @@ type Query {
 type Mutation{
     signUp(email: String!, firstName: String!, lastName: String!, password: String!): AuthenticationResponse
     signIn(email: String!, password: String!): AuthenticationResponse
+    createTest(testRequest: TestRequest!): SimpleResponse!
+    updateTest(id: ID!, testRequest: TestRequest!): SimpleResponse!
+    deleteTest(id: ID!) : ID
+    authenticateWithGoogle(tokenId: String!): AuthenticationResponse
+    saveQuestion(request: RecordSayingStatementQuestionRequest): SimpleResponse
 #    authenticateWithGoogle(tokenId: String!): AuthenticationResponse
     create(testRequest: TestRequest!): SimpleResponse!
     update(id: ID!, testRequest: TestRequest!): SimpleResponse!
@@ -49,6 +54,7 @@ input OptionRequest {
 }
 
 
+
 type TestResponse {
     id: ID!
     title: String!
@@ -65,6 +71,13 @@ input TestRequest {
     duration: Int
 }
 
+input RecordSayingStatementQuestionRequest {
+    title: String!
+    statement: String!
+    duration: Int!
+    testId: ID!
+    isActive: Boolean!
+}
 enum QuestionType {
     SELECT_ENGLISH_WORD,
     TYPE_WHAT_YOU_HEAR,
@@ -75,4 +88,8 @@ enum QuestionType {
     HIGHLIGHT_THE_ANSWER,
     SELECT_THE_MAIN_IDEA,
     SELECT_BEST_TITLE
+}
+
+type SimpleResponse{
+    message : String!
 }
