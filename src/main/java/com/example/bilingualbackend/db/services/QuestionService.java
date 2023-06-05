@@ -7,7 +7,6 @@ import com.example.bilingualbackend.db.enums.QuestionType;
 import com.example.bilingualbackend.db.repositories.QuestionRepository;
 import com.example.bilingualbackend.db.repositories.TestRepository;
 import com.example.bilingualbackend.dto.requests.question.QuestionMainRequest;
-import com.example.bilingualbackend.dto.requests.question.RecordSayingStatementQuestionRequest;
 import com.example.bilingualbackend.dto.responses.SimpleResponse;
 import com.example.bilingualbackend.exceptions.NotFoundException;
 import jakarta.transaction.Transactional;
@@ -16,6 +15,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -62,7 +64,6 @@ public class QuestionService {
                 .build();
     }
 
-
     public SimpleResponse saveRecordSayingStatement(QuestionMainRequest request) {
 //      FIELDS:
 //      String title;
@@ -74,36 +75,34 @@ public class QuestionService {
         Test test = testRepository.findById(request.getTestId())
                 .orElseThrow(() -> new NotFoundException(String.format("Test with ID %s doesn't exist", request.getTestId())));
 
-      .correctAnswer(request.getStatement())
+        Question question = Question.builder()
+                .questionType(QuestionType.RECORD_SAYING_STATEMENT)
+                .title(request.getTitle())
+                .correctAnswer(request.getStatement())
                 .duration(request.getDuration())
                 .test(test)
-                .enable(request.getIsActive())
                 .enable(request.isActive())
                 .build();
         questionRepository.save(question);
 
+        return SimpleResponse.builder()
+                .message(String.format("Question with title '%s' successfully saved", request.getTitle()))
+                .build();
     }
 
     public SimpleResponse saveQuestion(QuestionMainRequest questionMainRequest) {
-        if (questionMainRequest instanceof RecordSayingStatementQuestionRequest) {
-            return saveRecordSayingStatement((RecordSayingStatementQuestionRequest) questionMainRequest);
-            switch (questionMainRequest.getQuestionType()) {
-                case RECORD_SAYING_STATEMENT -> {
-                    return saveRecordSayingStatement(questionMainRequest);
-                }
-                case SELECT_THE_MAIN_IDEA -> {
-                    return saveSelectMainIdeaQuestion(questionMainRequest);
-                }
-                default -> {
-                    return SimpleResponse.builder()
-                            .message("Something went wrong...")
-                            .build();
-                }
+        switch (questionMainRequest.getQuestionType()) {
+            case RECORD_SAYING_STATEMENT -> {
+                return saveRecordSayingStatement(questionMainRequest);
             }
-
-            return SimpleResponse.builder()
-                    .message("Invalid question request")
-                    .build();
+            case SELECT_THE_MAIN_IDEA -> {
+                return saveSelectMainIdeaQuestion(questionMainRequest);
+            }
+            default -> {
+                return SimpleResponse.builder()
+                        .message("Something went wrong...")
+                        .build();
+            }
         }
     }
 }
