@@ -7,16 +7,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/graphiql/questions")
 @RequiredArgsConstructor
 public class QuestionGraphqlController {
 
     private final QuestionService questionService;
 
 
-    @MutationMapping(name = "saveSelectRealWords")
-    SimpleResponse saveSelectRealWords(@Argument QuestionRequest questionRequest) {
+    @MutationMapping(name = "saveQuestion")
+    SimpleResponse saveQuestion(@Argument QuestionRequest questionRequest) {
         return questionService.saveSelectRealWords(questionRequest);
     }
 }

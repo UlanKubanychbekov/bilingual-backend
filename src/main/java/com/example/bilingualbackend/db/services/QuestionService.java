@@ -55,6 +55,10 @@ public class QuestionService {
             question.setTest(test);
             questionRepository.save(question);
 
+            return new SimpleResponse(
+                    "Question with " + QuestionType.SELECT_ENGLISH_WORD + " type is save successfully!",
+                    "Ok");
+
         } else if (questionRequest.getQuestionType().equals(QuestionType.HIGHLIGHT_THE_ANSWER)) {
             Question question = Question.builder()
                     .title(questionRequest.getTitle())
@@ -67,33 +71,13 @@ public class QuestionService {
             test.getQuestions().add(question);
             question.setTest(test);
             questionRepository.save(question);
+
+            return new SimpleResponse(
+                    "Question with " + QuestionType.HIGHLIGHT_THE_ANSWER + " type is save successfully!",
+                    "Ok");
         }
 
-        return new SimpleResponse("Question is saved successfully!", "Ok");
+        return null;
 
     }
-
-//    public SimpleResponse saveHighLightTheAnswer(QuestionRequest questionRequest) {
-//        Test test = testRepository.findById(questionRequest.getTestId()).orElseThrow(() ->
-//                new NotFoundException(
-//                        "Test with id: " + questionRequest.getTestId() + " not found!"
-//                )
-//        );
-//
-//        Question question = Question.builder()
-//                .title(questionRequest.getTitle())
-//                .questionType(QuestionType.HIGHLIGHT_THE_ANSWER)
-//                .duration(questionRequest.getDuration())
-//                .passage(questionRequest.getPassage())
-//                .correctAnswer(questionRequest.getCorrectAnswer())
-//                .build();
-//
-//        test.getQuestions().add(question);
-//        question.setTest(test);
-//        questionRepository.save(question);
-//
-//        return new SimpleResponse(
-//                "Question with id: " + question.getId() + " is successfully saved!",
-//                "Ok");
-//    }
 }

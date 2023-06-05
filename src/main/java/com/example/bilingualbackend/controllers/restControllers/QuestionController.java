@@ -14,13 +14,8 @@ public class QuestionController {
 
     private final QuestionService questionService;
 
-    @PostMapping("/save-select-real-word")
+    @PostMapping("/save-question")
     public SimpleResponse saveSelectRealWordQuestion(@RequestBody QuestionRequest request) {
         return questionService.saveSelectRealWords(request);
-    }
-
-    @PostMapping("/save-highlight-the-answer")
-    public SimpleResponse saveHighlightTheAnswer(@RequestBody QuestionRequest questionRequest) {
-        return questionService.saveHighLightTheAnswer(questionRequest);
     }
 }
