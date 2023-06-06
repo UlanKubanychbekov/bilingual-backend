@@ -18,7 +18,7 @@ import static jakarta.persistence.CascadeType.*;
 public class QuestionAnswer {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "question_answer_seq")
-    @SequenceGenerator(name = "question_answer_seq", sequenceName = "question_answer_seq",allocationSize = 1)
+    @SequenceGenerator(name = "question_answer_seq", sequenceName = "question_answer_seq",allocationSize = 1, initialValue = 11)
     private Long id;
     private double score;
     private LocalTime fixedTime;
