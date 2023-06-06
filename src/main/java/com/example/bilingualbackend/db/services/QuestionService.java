@@ -34,24 +34,22 @@ public class QuestionService {
                 )
         );
 
-        List<Option> options = new ArrayList<>();
-        if (request.getOptionRequests() != null) {
-            for (OptionSelectMainIdeaRequest o : request.getOptionRequests()) {
-                options.add(new Option(o));
-            }
-        }
-
         Question question = Question.builder()
                 .title(request.getTitle())
                 .questionType(QuestionType.SELECT_ENGLISH_WORD)
                 .duration(request.getDuration())
-                .options(options)
                 .build();
 
-        for (Option o : options) {
-            o.setQuestion(question);
+        List<Option> options = new ArrayList<>();
+        if (request.getOptionRequests() != null) {
+            for (OptionSelectMainIdeaRequest o : request.getOptionRequests()) {
+                Option option = new Option(o);
+                option.setQuestion(question);
+                options.add(option);
+            }
         }
 
+        question.setOptions(options);
         test.getQuestions().add(question);
         question.setTest(test);
         questionRepository.save(question);
@@ -87,13 +85,6 @@ public class QuestionService {
     }
 
     private SimpleResponse saveSelectMainIdeaQuestion(QuestionMainRequest request) {
-//      FIELDS:
-//      String title;
-//      Integer duration;
-//      String passage;
-//      List<OptionSelectMainIdeaRequest> optionRequests;
-//      Long testId;
-//      boolean isActive;
 
         Test test = testRepository.findById(request.getTestId())
                 .orElseThrow(() -> new NotFoundException(String.format("Test with ID %s doesn't exist", request.getTestId())));
@@ -126,12 +117,6 @@ public class QuestionService {
     }
 
     public SimpleResponse saveRecordSayingStatement(QuestionMainRequest request) {
-//      FIELDS:
-//      String title;
-//      String statement;
-//      Integer duration;
-//      Long testId;
-//      Boolean isActive;
 
         Test test = testRepository.findById(request.getTestId())
                 .orElseThrow(() -> new NotFoundException(String.format("Test with ID %s doesn't exist", request.getTestId())));
