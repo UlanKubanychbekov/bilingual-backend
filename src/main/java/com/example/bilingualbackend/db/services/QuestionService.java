@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -108,9 +107,8 @@ public class QuestionService {
         List<Option> options = request.getOptionRequests().stream()
                 .map(x -> Option.builder()
                         .isTrue(x.isCorrect())
-                        .value(x.getValue())
                         .question(question)
-                        .title(question.getQuestionType().name())
+                        .title(x.getValue())
                         .build())
                 .collect(Collectors.toList());
 
@@ -131,7 +129,7 @@ public class QuestionService {
         Question question = Question.builder()
                 .questionType(QuestionType.RECORD_SAYING_STATEMENT)
                 .title(request.getTitle())
-                .correctAnswer(request.getStatement())
+                .value(Map.of(ContentType.TEXT, request.getStatement()))
                 .duration(request.getDuration())
                 .test(test)
                 .enable(request.isActive())
