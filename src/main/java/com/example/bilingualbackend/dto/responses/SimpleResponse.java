@@ -10,5 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class SimpleResponse {
+
     private String message;
+
 }

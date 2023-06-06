@@ -13,6 +13,7 @@ public class QuestionMainRequest {
     private String title;
     private Integer duration;
     private String passage;
+    private String correctAnswer;
     private List<OptionSelectMainIdeaRequest> optionRequests;
     private Long testId;
     private boolean isActive;
