@@ -25,7 +25,7 @@ public class Option {
     private Question question;
 
     public Option(OptionSelectMainIdeaRequest request) {
-        this.value = request.getValue();
+        this.value = request.getTitle();
         this.isTrue = request.isCorrect();
     }
 }

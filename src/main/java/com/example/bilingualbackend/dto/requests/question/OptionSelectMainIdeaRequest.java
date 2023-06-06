@@ -10,6 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class OptionSelectMainIdeaRequest {
+
+    private String title;
     private String value;
     private boolean isCorrect;
 }

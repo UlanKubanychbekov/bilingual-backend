@@ -3,6 +3,7 @@ package com.example.bilingualbackend.db.services;
 import com.example.bilingualbackend.db.entities.Option;
 import com.example.bilingualbackend.db.entities.Question;
 import com.example.bilingualbackend.db.entities.Test;
+import com.example.bilingualbackend.db.enums.ContentType;
 import com.example.bilingualbackend.db.enums.QuestionType;
 import com.example.bilingualbackend.db.repositories.QuestionRepository;
 import com.example.bilingualbackend.db.repositories.TestRepository;
@@ -15,8 +16,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,6 +41,7 @@ public class QuestionService {
                 .title(request.getTitle())
                 .questionType(QuestionType.SELECT_ENGLISH_WORD)
                 .duration(request.getDuration())
+                .test(test)
                 .build();
 
         List<Option> options = new ArrayList<>();
@@ -51,7 +55,6 @@ public class QuestionService {
 
         question.setOptions(options);
         test.getQuestions().add(question);
-        question.setTest(test);
         questionRepository.save(question);
 
         return new SimpleResponse(
@@ -67,16 +70,20 @@ public class QuestionService {
                 )
         );
 
+        Map<ContentType, String> value = new HashMap<>();
+        value.put(ContentType.TEXT, request.getStatement());
+
         Question question = Question.builder()
                 .title(request.getTitle())
                 .questionType(QuestionType.HIGHLIGHT_THE_ANSWER)
                 .duration(request.getDuration())
                 .passage(request.getPassage())
                 .correctAnswer(request.getCorrectAnswer())
+                .value(value)
+                .test(test)
                 .build();
 
         test.getQuestions().add(question);
-        question.setTest(test);
         questionRepository.save(question);
 
         return SimpleResponse.builder()

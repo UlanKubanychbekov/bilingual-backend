@@ -18,6 +18,7 @@ import static jakarta.persistence.CascadeType.*;
 @AllArgsConstructor
 @Builder
 public class Question {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "question_seq")
     @SequenceGenerator(name = "question_seq", sequenceName = "question_seq",allocationSize = 1, initialValue = 11)
