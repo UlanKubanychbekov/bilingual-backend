@@ -30,6 +30,25 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final TestRepository testRepository;
 
+    private SimpleResponse saveDescribeImage(QuestionMainRequest request) {
+        Test test = testRepository.findById(request.getTestId()).orElseThrow(() ->
+                new NotFoundException(String.format("Test with such an id: %s does not exist", request.getTestId())));
+
+        Question question = Question.builder()
+                .title(request.getTitle())
+                .questionType(request.getQuestionType())
+                .duration(request.getDuration())
+                .enable(request.isActive())
+                .value(Map.of(ContentType.IMAGE, request.getValue()))
+                .correctAnswer(request.getCorrectAnswer())
+                .build();
+
+        question.setTest(test);
+        test.getQuestions().add(question);
+        questionRepository.save(question);
+        return new SimpleResponse("Successfully saved!");
+    }
+
     private SimpleResponse saveSelectRealWord(QuestionMainRequest request) {
         Test test = testRepository.findById(request.getTestId()).orElseThrow(() ->
                 new NotFoundException(
@@ -156,6 +175,9 @@ public class QuestionService {
             }
             case SELECT_THE_MAIN_IDEA -> {
                 return saveSelectMainIdeaQuestion(questionMainRequest);
+            }
+            case DESCRIBE_IMAGE -> {
+                return saveDescribeImage(questionMainRequest);
             }
             default -> {
                 return SimpleResponse.builder()
