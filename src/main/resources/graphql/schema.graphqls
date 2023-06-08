@@ -64,6 +64,8 @@ input QuestionMainRequest {
     duration: Int
     isActive: Boolean
     optionRequests: [OptionSelectMainIdeaRequest]
+    count:Int
+    value:String
 }
 
 input OptionSelectMainIdeaRequest {
