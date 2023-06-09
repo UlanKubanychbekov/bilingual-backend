@@ -3,6 +3,7 @@ type Query {
     findAll: [TestResponse!]!
     findById(id: ID!) : TestResponse
     refreshToken(refreshToken: String!): AuthenticationResponse
+    getAllSubmittedResults: [SubmittedResultsResponse]
 }
 
 type Mutation{
@@ -69,6 +70,15 @@ input QuestionMainRequest {
 input OptionSelectMainIdeaRequest {
     value: String!
     isCorrect: Boolean!
+}
+
+type SubmittedResultsResponse {
+    resultId: ID
+    userFullName: String
+    dateOfSubmission: String
+    testName: String
+    resultStatus: Boolean
+    finalScore: Float
 }
 
 type SimpleResponse{

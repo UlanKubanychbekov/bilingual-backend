@@ -30,8 +30,8 @@ public class SecurityController {
         return authenticationService.refreshToken(refreshToken);
     }
 
-//    @MutationMapping(name = "authenticateWithGoogle")
-//    AuthenticationResponse authenticateWithGoogle(@Argument String tokenId) {
-//        return authenticationService.authWithGoogle(tokenId);
-//    }
+    @MutationMapping(name = "authenticateWithGoogle")
+    AuthenticationResponse authenticateWithGoogle(@Argument String tokenId) {
+        return authenticationService.authWithGoogle(tokenId);
+    }
 }
