@@ -63,6 +63,7 @@ input QuestionMainRequest {
     statement: String
     duration: Int
     isActive: Boolean
+    count: Int
     optionRequests: [OptionSelectMainIdeaRequest]
 }
 

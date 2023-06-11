@@ -40,6 +40,7 @@ public class QuestionService {
                 .title(request.getTitle())
                 .questionType(QuestionType.SELECT_ENGLISH_WORD)
                 .duration(request.getDuration())
+                .enable(request.isActive())
                 .test(test)
                 .build();
 
@@ -69,16 +70,14 @@ public class QuestionService {
                 )
         );
 
-        Map<ContentType, String> value = new HashMap<>();
-        value.put(ContentType.TEXT, request.getStatement());
-
         Question question = Question.builder()
                 .title(request.getTitle())
                 .questionType(QuestionType.HIGHLIGHT_THE_ANSWER)
                 .duration(request.getDuration())
                 .passage(request.getPassage())
                 .correctAnswer(request.getCorrectAnswer())
-                .value(value)
+                .value(Map.of(ContentType.TEXT, request.getStatement()))
+                .enable(request.isActive())
                 .test(test)
                 .build();
 
@@ -146,6 +145,18 @@ public class QuestionService {
         Test test = testRepository.findById(request.getTestId())
                 .orElseThrow(() -> new NotFoundException(String.format("Test with ID %s doesn't exist", request.getTestId())));
 
+        Question question = Question.builder()
+                .questionType(QuestionType.RESPOND_N_WORDS)
+                .title(request.getTitle())
+                .duration(request.getDuration())
+                .value(Map.of(ContentType.TEXT, request.getStatement()))
+                .count(request.getCount())
+                .enable(request.isActive())
+                .test(test)
+                .build();
+        questionRepository.save(question);
+
+        test.getQuestions().add(question);
 
         return SimpleResponse
                 .builder()

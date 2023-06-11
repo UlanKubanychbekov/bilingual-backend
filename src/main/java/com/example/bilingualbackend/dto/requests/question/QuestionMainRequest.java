@@ -18,4 +18,5 @@ public class QuestionMainRequest {
     private Long testId;
     private boolean isActive;
     private String statement;
+    private Integer count;
 }
