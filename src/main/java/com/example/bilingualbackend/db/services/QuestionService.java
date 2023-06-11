@@ -141,6 +141,18 @@ public class QuestionService {
                 .build();
     }
 
+    public SimpleResponse saveRespondInAtLeastNWords(QuestionMainRequest request) {
+
+        Test test = testRepository.findById(request.getTestId())
+                .orElseThrow(() -> new NotFoundException(String.format("Test with ID %s doesn't exist", request.getTestId())));
+
+
+        return SimpleResponse
+                .builder()
+                .message("Question with title: " + request.getTitle() + " successfully saved!")
+                .build();
+    }
+
     public SimpleResponse saveQuestion(QuestionMainRequest questionMainRequest) {
         switch (questionMainRequest.getQuestionType()) {
             case SELECT_ENGLISH_WORD -> {
@@ -155,6 +167,9 @@ public class QuestionService {
             case SELECT_THE_MAIN_IDEA -> {
                 return saveSelectMainIdeaQuestion(questionMainRequest);
             }
+            case RESPOND_N_WORDS -> {
+                return saveRespondInAtLeastNWords(questionMainRequest);
+            }
             default -> {
                 return SimpleResponse.builder()
                         .message("Something went wrong...")
@@ -162,4 +177,6 @@ public class QuestionService {
             }
         }
     }
+
+
 }
