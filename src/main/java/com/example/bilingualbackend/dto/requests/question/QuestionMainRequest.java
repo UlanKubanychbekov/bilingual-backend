@@ -14,6 +14,7 @@ public class QuestionMainRequest {
     private Integer duration;
     private String passage;
     private String correctAnswer;
+    private String value;
     private List<OptionSelectMainIdeaRequest> optionRequests;
     private Long testId;
     private boolean isActive;
