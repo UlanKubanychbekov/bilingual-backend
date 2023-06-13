@@ -13,7 +13,7 @@ import java.util.List;
 public class ResultService {
     private final JdbcTemplate jdbcTemplate;
 
-    public List<SubmittedResultsResponse> getAllSubmittedResults(){
+    public List<SubmittedResultsResponse> getAllSubmittedResults(Long userId) {
         String sql = """
                 SELECT r.id as id,
                 CONCAT(u.first_name, ' ', u.last_name) as user_full_name,
@@ -22,9 +22,12 @@ public class ResultService {
                 r.is_evaluated as status,
                 r.score as score
                 FROM results r
-                JOIN users u ON r.user_id = u.id
+                JOIN users u ON r.user_id = u.id 
                 JOIN tests t on r.test_id = t.id
+                CASE 
                 """;
+
+        if (userId != null) sql += " WHERE u.id = " + userId;
 
         return jdbcTemplate.query(sql, (resultSet, i) ->
                 new SubmittedResultsResponse(
