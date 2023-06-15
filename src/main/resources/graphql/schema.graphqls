@@ -1,7 +1,7 @@
 type Query {
     users: String
     findAll: [TestResponse!]!
-    findById(id: ID!) : TestResponse
+    findByTestId(id: ID!) : TestResponse
     refreshToken(refreshToken: String!): AuthenticationResponse
 }
 
@@ -45,6 +45,14 @@ type TestResponse {
     description: String!
     enable: Boolean!
     duration: Int!
+    questions: [QuestionResponse]
+}
+type QuestionResponse{
+    title: String!
+    questionType: QuestionType
+    duration: Int
+    enable: Boolean
+
 }
 
 input TestRequest {
@@ -59,12 +67,15 @@ input QuestionMainRequest {
     testId: ID!
     title: String
     passage: String
+    value: String
     correctAnswer: String
     statement: String
     duration: Int
     isActive: Boolean
     count: Int
     optionRequests: [OptionSelectMainIdeaRequest]
+    count:Int
+    value:String
 }
 
 input OptionSelectMainIdeaRequest {

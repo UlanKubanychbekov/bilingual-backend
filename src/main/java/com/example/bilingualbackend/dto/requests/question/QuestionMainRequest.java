@@ -19,4 +19,5 @@ public class QuestionMainRequest {
     private boolean isActive;
     private String statement;
     private Integer count;
+    private String value;
 }
