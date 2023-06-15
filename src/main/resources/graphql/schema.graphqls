@@ -67,12 +67,10 @@ input QuestionMainRequest {
     testId: ID!
     title: String
     passage: String
-    value: String
     correctAnswer: String
     statement: String
     duration: Int
     isActive: Boolean
-    count: Int
     optionRequests: [OptionSelectMainIdeaRequest]
     count:Int
     value:String
