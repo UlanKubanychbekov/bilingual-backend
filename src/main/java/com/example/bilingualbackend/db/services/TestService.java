@@ -1,6 +1,7 @@
 package com.example.bilingualbackend.db.services;
 
 import com.example.bilingualbackend.db.entities.Test;
+import com.example.bilingualbackend.db.repositories.QuestionRepository;
 import com.example.bilingualbackend.db.repositories.TestRepository;
 import com.example.bilingualbackend.dto.requests.test.TestRequest;
 import com.example.bilingualbackend.dto.responses.SimpleResponse;
@@ -18,6 +19,7 @@ import java.util.List;
 public class TestService {
 
     private final TestRepository testRepository;
+    private final QuestionRepository questionRepository;
 
     public List<TestResponse> getAllTests() {
         return testRepository.findAllTests();
@@ -49,7 +51,9 @@ public class TestService {
     }
 
     public TestResponse findById(Long id) {
-        return testRepository.findTestById(id);
+        TestResponse testResponse = testRepository.findTestById(id);
+        testResponse.setQuestions(questionRepository.findQuestionsByTestId(id));
+        return testResponse;
     }
 
     public SimpleResponse delete(Long id) {

@@ -30,7 +30,7 @@ public class TestController {
         return testService.getAllTests();
     }
 
-    @QueryMapping(name = "findByIdTest")
+    @QueryMapping(name = "findByTestId")
     public TestResponse findById(@Argument Long id) {
         return testService.findById(id);
     }

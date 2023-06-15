@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -14,6 +16,8 @@ public class TestResponse {
     private String description;
     private boolean enable;
     private int duration;
+
+    private List<QuestionResponse> questions;
 
     public TestResponse(Long id, String title, String description, boolean enable, int duration) {
         this.id = id;
