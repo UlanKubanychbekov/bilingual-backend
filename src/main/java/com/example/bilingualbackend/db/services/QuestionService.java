@@ -181,6 +181,35 @@ public class QuestionService {
     }
 
 
+    public SimpleResponse saveSelectTheBestTitle(QuestionMainRequest questionRequest) {
+        Test test = testRepository.findById(questionRequest.getTestId()).orElseThrow(() ->
+                new NotFoundException("Test with id: " + questionRequest.getTestId() + " doesn't exist"));
+
+        Question question = Question.builder()
+
+                .questionType(QuestionType.SELECT_BEST_TITLE)
+                .duration(questionRequest.getDuration())
+                .title(questionRequest.getTitle())
+                .passage(questionRequest.getPassage())
+                .test(test)
+                .build();
+
+        if (questionRequest.getOptionRequests() != null) {
+            List<Option> options = questionRequest.getOptionRequests().stream()
+                    .map(x -> Option.builder()
+                            .isTrue(x.isCorrect())
+                            .question(question)
+                            .title(x.getValue())
+                            .build()).toList();
+            question.setOptions(options);
+        }
+        questionRepository.save(question);
+            return SimpleResponse.builder()
+                    .message("Question : " + QuestionType.SELECT_BEST_TITLE + "  is saved successfully!")
+                    .build();
+
+    }
+
     public SimpleResponse saveQuestion(QuestionMainRequest questionMainRequest) {
         switch (questionMainRequest.getQuestionType()) {
             case SELECT_ENGLISH_WORD -> {
@@ -194,6 +223,9 @@ public class QuestionService {
             }
             case SELECT_THE_MAIN_IDEA -> {
                 return saveSelectMainIdeaQuestion(questionMainRequest);
+            }
+            case SELECT_BEST_TITLE -> {
+                return saveSelectTheBestTitle(questionMainRequest);
             }
             case TYPE_WHAT_YOU_HEAR->{
                 return saveTypeWhatYouHear(questionMainRequest);
