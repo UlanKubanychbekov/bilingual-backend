@@ -160,6 +160,27 @@ public class QuestionService {
                 .build();
     }
 
+    public SimpleResponse saveTypeWhatYouHear(QuestionMainRequest questionRequest) {
+        Test test = testRepository.findById(questionRequest.getTestId()).orElseThrow(
+                () -> new NotFoundException("Test with id: " + questionRequest.getTestId() + " doesn't exist"));
+
+        Question question = Question.builder()
+                .title(questionRequest.getTitle())
+                .questionType(QuestionType.TYPE_WHAT_YOU_HEAR)
+                .count(questionRequest.getCount())
+                .value(Map.of(ContentType.AUDIO, questionRequest.getValue()))
+                .correctAnswer(questionRequest.getCorrectAnswer())
+                .duration(questionRequest.getDuration())
+                .test(test)
+                .build();
+        questionRepository.save(question);
+
+        return SimpleResponse.builder()
+                .message("Question : "+questionRequest.getTitle()+" successfully saved")
+                .build();
+    }
+
+
     public SimpleResponse saveQuestion(QuestionMainRequest questionMainRequest) {
         switch (questionMainRequest.getQuestionType()) {
             case SELECT_ENGLISH_WORD -> {
@@ -173,6 +194,9 @@ public class QuestionService {
             }
             case SELECT_THE_MAIN_IDEA -> {
                 return saveSelectMainIdeaQuestion(questionMainRequest);
+            }
+            case TYPE_WHAT_YOU_HEAR->{
+                return saveTypeWhatYouHear(questionMainRequest);
             }
             case DESCRIBE_IMAGE -> {
                 return saveDescribeImage(questionMainRequest);
