@@ -29,6 +29,25 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final TestRepository testRepository;
 
+    private SimpleResponse saveDescribeImage(QuestionMainRequest request) {
+        Test test = testRepository.findById(request.getTestId()).orElseThrow(() ->
+                new NotFoundException(String.format("Test with such an id: %s does not exist", request.getTestId())));
+
+        Question question = Question.builder()
+                .title(request.getTitle())
+                .questionType(request.getQuestionType())
+                .duration(request.getDuration())
+                .enable(request.isActive())
+                .value(Map.of(ContentType.IMAGE, request.getValue()))
+                .correctAnswer(request.getCorrectAnswer())
+                .build();
+
+        question.setTest(test);
+        test.getQuestions().add(question);
+        questionRepository.save(question);
+        return new SimpleResponse("Successfully saved!");
+    }
+
     private SimpleResponse saveSelectRealWord(QuestionMainRequest request) {
         Test test = testRepository.findById(request.getTestId()).orElseThrow(() ->
                 new NotFoundException(
@@ -112,14 +131,14 @@ public class QuestionService {
                         .build())
                 .collect(Collectors.toList());
 
-            question.setOptions(options);
+        question.setOptions(options);
 
-            questionRepository.save(question);
+        questionRepository.save(question);
 
-            return SimpleResponse.builder()
-                    .message(String.format("Question with title '%s' successfully saved", request.getTitle()))
-                    .build();
-        }
+        return SimpleResponse.builder()
+                .message(String.format("Question with title '%s' successfully saved", request.getTitle()))
+                .build();
+    }
 
     public SimpleResponse saveRecordSayingStatement(QuestionMainRequest request) {
 
@@ -140,6 +159,27 @@ public class QuestionService {
                 .message(String.format("Question with title '%s' successfully saved", request.getTitle()))
                 .build();
     }
+
+    public SimpleResponse saveTypeWhatYouHear(QuestionMainRequest questionRequest) {
+        Test test = testRepository.findById(questionRequest.getTestId()).orElseThrow(
+                () -> new NotFoundException("Test with id: " + questionRequest.getTestId() + " doesn't exist"));
+
+        Question question = Question.builder()
+                .title(questionRequest.getTitle())
+                .questionType(QuestionType.TYPE_WHAT_YOU_HEAR)
+                .count(questionRequest.getCount())
+                .value(Map.of(ContentType.AUDIO, questionRequest.getValue()))
+                .correctAnswer(questionRequest.getCorrectAnswer())
+                .duration(questionRequest.getDuration())
+                .test(test)
+                .build();
+        questionRepository.save(question);
+
+        return SimpleResponse.builder()
+                .message("Question : "+questionRequest.getTitle()+" successfully saved")
+                .build();
+    }
+
 
     public SimpleResponse saveSelectTheBestTitle(QuestionMainRequest questionRequest) {
         Test test = testRepository.findById(questionRequest.getTestId()).orElseThrow(() ->
@@ -186,6 +226,12 @@ public class QuestionService {
             }
             case SELECT_BEST_TITLE -> {
                 return saveSelectTheBestTitle(questionMainRequest);
+            }
+            case TYPE_WHAT_YOU_HEAR->{
+                return saveTypeWhatYouHear(questionMainRequest);
+            }
+            case DESCRIBE_IMAGE -> {
+                return saveDescribeImage(questionMainRequest);
             }
             default -> {
                 return SimpleResponse.builder()
