@@ -67,7 +67,6 @@ input QuestionMainRequest {
     testId: ID!
     title: String
     passage: String
-    value: String
     correctAnswer: String
     statement: String
     duration: Int

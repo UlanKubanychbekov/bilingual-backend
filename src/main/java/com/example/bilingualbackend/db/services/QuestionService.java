@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -59,6 +58,7 @@ public class QuestionService {
                 .title(request.getTitle())
                 .questionType(QuestionType.SELECT_ENGLISH_WORD)
                 .duration(request.getDuration())
+                .enable(request.isActive())
                 .test(test)
                 .build();
 
@@ -88,16 +88,14 @@ public class QuestionService {
                 )
         );
 
-        Map<ContentType, String> value = new HashMap<>();
-        value.put(ContentType.TEXT, request.getStatement());
-
         Question question = Question.builder()
                 .title(request.getTitle())
                 .questionType(QuestionType.HIGHLIGHT_THE_ANSWER)
                 .duration(request.getDuration())
                 .passage(request.getPassage())
                 .correctAnswer(request.getCorrectAnswer())
-                .value(value)
+                .value(Map.of(ContentType.TEXT, request.getStatement()))
+                .enable(request.isActive())
                 .test(test)
                 .build();
 
@@ -210,6 +208,30 @@ public class QuestionService {
 
     }
 
+    public SimpleResponse saveRespondInAtLeastNWords(QuestionMainRequest request) {
+
+        Test test = testRepository.findById(request.getTestId())
+                .orElseThrow(() -> new NotFoundException(String.format("Test with ID %s doesn't exist", request.getTestId())));
+
+        Question question = Question.builder()
+                .questionType(QuestionType.RESPOND_N_WORDS)
+                .title(request.getTitle())
+                .value(Map.of(ContentType.TEXT, request.getStatement()))
+                .duration(request.getDuration())
+                .count(request.getCount())
+                .enable(request.isActive())
+                .test(test)
+                .build();
+        questionRepository.save(question);
+
+        test.getQuestions().add(question);
+
+        return SimpleResponse
+                .builder()
+                .message("Question with title: " + request.getTitle() + " successfully saved!")
+                .build();
+    }
+
     public SimpleResponse saveQuestion(QuestionMainRequest questionMainRequest) {
         switch (questionMainRequest.getQuestionType()) {
             case SELECT_ENGLISH_WORD -> {
@@ -223,6 +245,9 @@ public class QuestionService {
             }
             case SELECT_THE_MAIN_IDEA -> {
                 return saveSelectMainIdeaQuestion(questionMainRequest);
+            }
+            case RESPOND_N_WORDS -> {
+                return saveRespondInAtLeastNWords(questionMainRequest);
             }
             case SELECT_BEST_TITLE -> {
                 return saveSelectTheBestTitle(questionMainRequest);
